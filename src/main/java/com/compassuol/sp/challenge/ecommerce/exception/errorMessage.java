@@ -17,8 +17,7 @@ public class ErrorMessage {
     private List<ErrorDetail> details;
 
     private Map<String, String> errors;
-
-    @ToString
+@ToString
     public ErrorMessage(HttpStatus status, String path, String method, String message, List<ErrorDetail> details) {
         this.code = status.value();
         this.path = request.getRequestURI();
@@ -38,11 +37,83 @@ public class ErrorMessage {
         addErrors(result);
     }
 
-    private void addErrors(BindingResult result) {
-        this.errors = new HashMap<>();
-        for (FieldError fieldError : result.getFieldErrors()) {
-            this.errors.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
+    private void addErrors(BindingResult result){
+    this.errors = new HashMap<>();
+    for (FieldError fieldError : result.getFieldErrors()){
+        this.errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+    }
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public HttpStatus getStatus() {
+        return status;
+    }
+    public String getMethod() {
+        return method;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public List<ErrorDetail> getDetails() {
+        return details;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setStatus(HttpStatus status) {
+        this.status = status;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setDetails(List<ErrorDetail> details) {
+        this.details = details;
+    }
+}
+
+class ErrorDetail {
+    private String field;
+    private String message;
+
+    public ErrorDetail(String field, String message) {
+        this.field = field;
+        this.message = message;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
