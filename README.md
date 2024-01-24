@@ -50,3 +50,43 @@ tecnologias e conhecimentos aprendidos no curso. projeto desenvolvido pela equip
 - **Método:** `DELETE`
 - **Endpoint:** `/products/id`
 - **Descrição:** Exclui um produto existente.
+
+## Pedido
+
+### Listar Pedidos
+
+- **Método:** `GET`
+- **Endpoint:** `/orders`
+- **Descrição:** Retorna a lista de pedidos ordenados por data de criação, dos mais recentes para os mais antigos. É possível filtrar por status do pedido.
+
+### Buscar Pedido por ID
+
+- **Método:** `GET`
+- **Endpoint:** `/orders/id`
+- **Descrição:** Retorna as informações de um pedido específico.
+
+### Cadastrar Pedido
+
+- **Método:** `POST`
+- **Endpoint:** `/orders`
+- **Descrição:** Cria um novo pedido.
+
+### Atualizar Pedido por ID
+
+- **Método:** `PUT`
+- **Endpoint:** `/orders/id`
+- **Descrição:** Atualiza as informações de um pedido existente, como status ou data de entrega.
+
+### Cancelar Pedido por ID
+
+- **Método:** `POST`
+- **Endpoint:** `/orders/id/cancel`
+- **Descrição:** Cancela um pedido existente.
+
+### Configuração do Projeto
+- Clone o repositório.
+- Abra o projeto em sua IDE favorita.
+- Configure as propriedades do banco de dados em application.properties.
+- Execute o projeto usando sua IDE ou Maven.
+- Status do Projeto
+- O projeto está em desenvolvimento.
