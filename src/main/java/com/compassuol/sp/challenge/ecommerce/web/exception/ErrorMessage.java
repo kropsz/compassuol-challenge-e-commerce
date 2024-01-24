@@ -34,4 +34,14 @@ public class ErrorMessage {
         this.path = request.getRequestURI();
         this.method = request.getMethod();
         this.message = status.getReasonPhrase();
+        addErrors(result);
     }
+
+    private void addErrors(BindingResult result) {
+        this.errors = new HashMap<>();
+        for (FieldError fieldError : result.getFieldErrors()) {
+            this.errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+    }
+}
+
