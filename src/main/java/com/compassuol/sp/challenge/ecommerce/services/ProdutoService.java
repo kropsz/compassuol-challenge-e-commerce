@@ -2,6 +2,7 @@ package com.compassuol.sp.challenge.ecommerce.services;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Produto;
 import com.compassuol.sp.challenge.ecommerce.exception.ProductNameUniqueViolation;
+import com.compassuol.sp.challenge.ecommerce.exception.ProdutoNotFoundException;
 import com.compassuol.sp.challenge.ecommerce.repository.ProdutoRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -46,8 +47,12 @@ public class ProdutoService {
     @Transactional
     public Produto updateProduto(Long id, Produto produto) {
         Produto produtoUpdate = produtoRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
-
+            .orElseThrow(() -> new ProdutoNotFoundException("Produto não encontrado"));
+        /* 
+        if (produto.getDescription().length() < 10) {
+            throw new InvalidFieldValueException("Valor invalido para o campo 'description'");
+        }
+        */
         if (produto.getName() != null) {
             produtoUpdate.setName(produto.getName());
         }
@@ -60,6 +65,7 @@ public class ProdutoService {
 
         return produtoRepository.save(produtoUpdate);
     }
+
 
     public void deleteProduto(Long id) {
         if (produtoRepository.existsById(id)) {
