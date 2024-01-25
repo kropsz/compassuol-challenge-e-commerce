@@ -28,6 +28,6 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("O campo nome é Inválidos", request, HttpStatus.CONFLICT));
+                .body(new ErrorMessage("O campo nome é Inválido", request, HttpStatus.CONFLICT));
     }
 }
