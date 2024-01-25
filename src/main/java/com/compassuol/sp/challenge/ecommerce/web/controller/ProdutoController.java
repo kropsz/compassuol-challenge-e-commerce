@@ -59,11 +59,11 @@ public class ProdutoController {
     @Operation(summary = "Operação de atualizar as informações de um produto", description =  "Operação de atualizar as informações de um produto",
            responses = {
                    @ApiResponse(responseCode = "200",
-                        description = "Produto atualzado com sucesso",
+                        description = "Recurso atualzado com sucesso",
                         content = @Content(mediaType = " application/json;charset=UTF-8", schema = @Schema(implementation = ProdutoResponseDto.class))),
 
                    @ApiResponse(responseCode = "404",
-                        description = "Identificador do produto inexistente ",
+                        description = "O Identificador de recurso não existe ",
                         content = @Content(mediaType = " application/json;charset=UTF-8", schema = @Schema(implementation = ErrorMessage.class))),
 
                    @ApiResponse(responseCode = "422",
@@ -74,8 +74,7 @@ public class ProdutoController {
     public ResponseEntity<ProdutoResponseDto> updateProduto(@PathVariable Long id, @RequestBody @Valid ProdutoCreateDto produto) {
         Produto produtoUpdateFromDto = ProdutoMapper.toProduto(produto);
         Produto updatedProduto = produtoService.updateProduto(id, produtoUpdateFromDto);
-        ProdutoResponseDto dto = ProdutoMapper.toDto(updatedProduto);
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(ProdutoMapper.toDto(updatedProduto));
     }
     
 }
