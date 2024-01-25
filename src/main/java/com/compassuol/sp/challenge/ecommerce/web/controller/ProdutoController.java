@@ -71,9 +71,8 @@ public class ProdutoController {
                                 content = @Content(mediaType = " application/json;charset=UTF-8", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "422",
                                 description = "Recurso não processado por entrada de dados invalidos",
-                                content = @Content(mediaType = "application/json",
-                                schema = @Schema(implementation = ErrorMessage.class)))
-    })
+                                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+        })
 
     @PutMapping("/{id}")	
     public ResponseEntity<ProdutoResponseDto> updateProduto(@PathVariable Long id, @RequestBody @Valid ProdutoCreateDto produto) {
