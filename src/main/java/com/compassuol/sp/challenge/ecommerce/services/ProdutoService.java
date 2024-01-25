@@ -48,20 +48,10 @@ public class ProdutoService {
     public Produto updateProduto(Long id, Produto produto) {
         Produto produtoUpdate = produtoRepository.findById(id)
             .orElseThrow(() -> new ProdutoNotFoundException("Produto não encontrado"));
-        /* 
-        if (produto.getDescription().length() < 10) {
-            throw new InvalidFieldValueException("Valor invalido para o campo 'description'");
-        }
-        */
-        if (produto.getName() != null) {
-            produtoUpdate.setName(produto.getName());
-        }
-        if (produto.getDescription() != null) {
-            produtoUpdate.setDescription(produto.getDescription());
-        }
-        if (produto.getValue() != null) {
-            produtoUpdate.setValue(produto.getValue());
-        }
+
+        produtoUpdate.setName(produto.getName());
+        produtoUpdate.setDescription(produto.getDescription());
+        produtoUpdate.setValue(produto.getValue());
 
         return produtoRepository.save(produtoUpdate);
     }
