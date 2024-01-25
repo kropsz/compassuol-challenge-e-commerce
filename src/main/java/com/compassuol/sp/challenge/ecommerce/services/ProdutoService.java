@@ -3,10 +3,12 @@ package com.compassuol.sp.challenge.ecommerce.services;
 import com.compassuol.sp.challenge.ecommerce.entities.Produto;
 import com.compassuol.sp.challenge.ecommerce.repository.ProdutoRepository;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,17 +37,27 @@ public class ProdutoService {
         }
     }
 
+    @Transactional
     public Produto createProduto(Produto produto) {
         return produtoRepository.save(produto);
     }
 
+    @Transactional
     public Produto updateProduto(Long id, Produto produto) {
-        if (produtoRepository.existsById(id)) {
-            produto.setId(id);
-            return produtoRepository.save(produto);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
+        Produto produtoUpdate = produtoRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+
+        if (produto.getName() != null) {
+            produtoUpdate.setName(produto.getName());
         }
+        if (produto.getDescription() != null) {
+            produtoUpdate.setDescription(produto.getDescription());
+        }
+        if (produto.getValue() != null) {
+            produtoUpdate.setValue(produto.getValue());
+        }
+
+        return produtoRepository.save(produtoUpdate);
     }
 
     public void deleteProduto(Long id) {

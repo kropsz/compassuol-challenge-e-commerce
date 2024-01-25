@@ -3,12 +3,11 @@ package com.compassuol.sp.challenge.ecommerce.web.dto.mapper;
 import com.compassuol.sp.challenge.ecommerce.entities.Produto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ProdutoCreateDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ProdutoResponseDto;
+
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 public class ProdutoMapper {
 
