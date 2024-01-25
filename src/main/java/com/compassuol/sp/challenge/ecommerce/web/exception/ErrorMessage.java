@@ -5,9 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
-import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @ToString
 @Getter
@@ -18,30 +19,34 @@ public class ErrorMessage {
     private int code;
     private String path;
     private String method;
+    private String status;
     private String message;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<ErrorDetail> details;
-
-    private Map<String, String> errors;
     public ErrorMessage(String message, HttpServletRequest request, HttpStatus status) {
         this.code = status.value();
         this.path = request.getRequestURI();
         this.method = request.getMethod();
-        this.message = status.getReasonPhrase();
+        this.status = status.getReasonPhrase();
+        this.message = message;
     }
 
     public ErrorMessage(String message, HttpServletRequest request, BindingResult result, HttpStatus status) {
         this.code = status.value();
         this.path = request.getRequestURI();
         this.method = request.getMethod();
-        this.message = status.getReasonPhrase();
-        addErrors(result);
+        this.status = status.getReasonPhrase(); 
+        this.message = message;
+        addDetails(result);
     }
 
-    private void addErrors(BindingResult result) {
-        this.errors = new HashMap<>();
+    private void addDetails(BindingResult result) {
+        this.details = new ArrayList<>();
         for (FieldError fieldError : result.getFieldErrors()) {
-            this.errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+            ErrorDetail errorDetail = new ErrorDetail();
+            errorDetail.setField(fieldError.getField());
+            errorDetail.setMessage(fieldError.getDefaultMessage());
+            this.details.add(errorDetail);
         }
     }
 }
-
