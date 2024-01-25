@@ -20,6 +20,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Parameter;
+import static io.swagger.v3.oas.annotations.enums.ParameterIn.PATH;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -39,7 +41,7 @@ public class ProdutoController {
     private final ProdutoService produtoService;
 
     @Operation(summary = "Criar um novo produto", description = "Recurso para criar um novo produto",
-            responses = {
+                responses = {
                     @ApiResponse(responseCode = "201",
                             description = "Recurso criado com sucesso",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProdutoResponseDto.class))),
@@ -56,20 +58,23 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ProdutoMapper.toDto(produto));
     }
 
-    @Operation(summary = "Operação de atualizar as informações de um produto", description =  "Operação de atualizar as informações de um produto",
-           responses = {
-                   @ApiResponse(responseCode = "200",
-                        description = "Recurso atualzado com sucesso",
-                        content = @Content(mediaType = " application/json;charset=UTF-8", schema = @Schema(implementation = ProdutoResponseDto.class))),
+    @Operation(summary = "Operação de atualizar as informações de um produto", description = "Operação de atualizar as informações de um produto",
+                parameters = {
+                    @Parameter(in = PATH, name = "id", description = "Número identificador do produto a ser atualizado", required = true),
+                },
+                responses = {
+                    @ApiResponse(responseCode = "200",
+                                description = "Recurso atualzado com sucesso",
+                                content = @Content(mediaType = " application/json;charset=UTF-8", schema = @Schema(implementation = ProdutoResponseDto.class))),
+                    @ApiResponse(responseCode = "404",
+                                description = "O Identificador de recurso não existe ",
+                                content = @Content(mediaType = " application/json;charset=UTF-8", schema = @Schema(implementation = ErrorMessage.class))),
+                    @ApiResponse(responseCode = "422",
+                                description = "Recurso não processado por entrada de dados invalidos",
+                                content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = ErrorMessage.class)))
+    })
 
-                   @ApiResponse(responseCode = "404",
-                        description = "O Identificador de recurso não existe ",
-                        content = @Content(mediaType = " application/json;charset=UTF-8", schema = @Schema(implementation = ErrorMessage.class))),
-
-                   @ApiResponse(responseCode = "422",
-                        description = "Recurso não processado por entrada de dados invalidos",
-                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
-               })
     @PutMapping("/{id}")	
     public ResponseEntity<ProdutoResponseDto> updateProduto(@PathVariable Long id, @RequestBody @Valid ProdutoCreateDto produto) {
         Produto produtoUpdateFromDto = ProdutoMapper.toProduto(produto);
