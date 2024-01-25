@@ -1,6 +1,7 @@
 package com.compassuol.sp.challenge.ecommerce.services;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Produto;
+import com.compassuol.sp.challenge.ecommerce.exception.ProductNameUniqueViolation;
 import com.compassuol.sp.challenge.ecommerce.repository.ProdutoRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,6 @@ public class ProdutoService {
             throw new ProductNameUniqueViolation(String.format("Produto '%s' já cadastrado", produto.getName()));
         }
         return produtoRepository.save(produto);
-    }
     }
 
     public Produto updateProduto(Long id, Produto produto) {
