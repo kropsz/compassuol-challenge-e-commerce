@@ -64,13 +64,13 @@ public class ProdutoController {
                 },
                 responses = {
                     @ApiResponse(responseCode = "200",
-                                description = "Recurso atualzado com sucesso",
+                                description = "Produto atualzado com sucesso",
                                 content = @Content(mediaType = " application/json;charset=UTF-8", schema = @Schema(implementation = ProdutoResponseDto.class))),
                     @ApiResponse(responseCode = "404",
-                                description = "O Identificador de recurso não existe ",
+                                description = "Identificador de produto inexistente",
                                 content = @Content(mediaType = " application/json;charset=UTF-8", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "422",
-                                description = "Recurso não processado por entrada de dados invalidos",
+                                description = "Produto não processado por entrada de dados invalidos",
                                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
         })
 
