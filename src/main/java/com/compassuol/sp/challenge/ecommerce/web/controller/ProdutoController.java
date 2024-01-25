@@ -58,7 +58,7 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ProdutoMapper.toDto(produto));
     }
 
-    @Operation(summary = "Operação de atualizar as informações de um produto", description = "Operação de atualizar as informações de um produto",
+    @Operation(summary = "Atualizar as informações de um produto", description = "Operação para realizar atualizações nas informações de um produto conforme o identificador fornecido",
                 parameters = {
                     @Parameter(in = PATH, name = "id", description = "Número identificador do produto a ser atualizado", required = true),
                 },
