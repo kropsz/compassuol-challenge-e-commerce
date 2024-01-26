@@ -64,4 +64,10 @@ public class ProdutoService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
         }
     }
+    @Transactional(readOnly = true)
+    public Produto buscarPorId(Long id) {
+        return produtoRepository.findById(id).orElseThrow(
+                () -> new ProdutoNotFoundException("Produto não encontrado.")
+        );
+    }
 }
