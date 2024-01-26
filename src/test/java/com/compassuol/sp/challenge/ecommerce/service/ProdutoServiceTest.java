@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import static com.compassuol.sp.challenge.ecommerce.common.ProdutoConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -28,4 +29,21 @@ public class ProdutoServiceTest {
 
     @Mock
     private ProdutoRepository produtoRepository;
+
+    @Test
+    public void updateProduto_successfullyUpdates_WithValidData() {
+        when(produtoRepository.findById(1L)).thenReturn(Optional.of(PRODUTO));
+        Long id = 1L;
+        Produto sut = productService.updateProduto(id, ProdutoMapper.toProduto(PRODUTO_VALID_DTO));
+
+        assertThat(sut).isNotEqualTo(PRODUTO);
+    }
+
+    @Test
+    public void updateProduto_failsToUpdate_WithInvalidId() {
+        when(produtoRepository.findById(1L)).thenReturn(Optional.empty());
+        Long id = 1L;
+
+        assertThatThrownBy(() -> productService.updateProduto(id, ProdutoMapper.toProduto(PRODUTO_VALID_DTO))).isInstanceOf(ProdutoNotFoundException.class);
+    }
 }
