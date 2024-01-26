@@ -56,12 +56,12 @@ public class ProdutoService {
         return produtoRepository.save(produtoUpdate);
     }
 
-
+    @Transactional
     public void deleteProduto(Long id) {
         if (produtoRepository.existsById(id)) {
             produtoRepository.deleteById(id);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
+            throw new ProdutoNotFoundException("Produto não encontrado");
         }
     }
 }
