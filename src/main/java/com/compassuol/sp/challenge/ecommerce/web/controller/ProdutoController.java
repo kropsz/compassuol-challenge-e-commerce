@@ -30,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 
 
 @Tag(name = "Produtos", description = "Contém todas as opereções relativas ao recurso de um produto")
@@ -95,4 +96,9 @@ public class ProdutoController {
         return ResponseEntity.ok(ProdutoMapper.toDto(produto));
     }
 
+    @GetMapping
+    public ResponseEntity<List<ProdutoResponseDto>> getAll() {
+        List<Produto> prods = produtoService.getAllProdutos();
+        return ResponseEntity.ok(ProdutoMapper.toListDto(prods));
+    }
 }
