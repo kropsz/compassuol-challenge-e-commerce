@@ -76,9 +76,6 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(ProdutoMapper.toDto(updatedProduto));
     }
 
-
-
-
         @Operation(
                 summary = "Excluir produto",
                 description = "Operação para excluir um produto conforme o identificador fornecido",
