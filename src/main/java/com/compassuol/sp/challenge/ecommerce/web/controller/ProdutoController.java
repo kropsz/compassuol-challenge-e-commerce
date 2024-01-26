@@ -30,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 
 
 @Tag(name = "Produtos", description = "Contém todas as opereções relativas ao recurso de um produto")
@@ -95,4 +96,16 @@ public class ProdutoController {
         return ResponseEntity.ok(ProdutoMapper.toDto(produto));
     }
 
+    @Operation(summary = "Recuperar todos os Produtos", description = "Recurso para recuperar todos os produtos no banco de dados",
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            description = "Recursos recuperados com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProdutoResponseDto.class)))
+            }
+    )
+    @GetMapping
+    public ResponseEntity<List<ProdutoResponseDto>> getAll() {
+        List<Produto> prods = produtoService.getAllProdutos();
+        return ResponseEntity.ok(ProdutoMapper.toListDto(prods));
+    }
 }
