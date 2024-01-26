@@ -115,5 +115,12 @@ public class ProdutoServiceTest {
 
         assertThatThrownBy(() -> productService.deleteProduto(id)).isInstanceOf(ProdutoNotFoundException.class);
     }
+    @Test
+    public void getById_succefull_WithValidId_returnProduct() {
+        when(produtoRepository.findById(1L)).thenReturn(Optional.of(PRODUTO));
+        Produto sut = productService.getProdutoById(1L);
+        assertThat(sut).isEqualTo(PRODUTO);
+    }
+
 }
 
