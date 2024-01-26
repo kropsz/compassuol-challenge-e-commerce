@@ -80,6 +80,15 @@ public class ProdutoController {
         Produto updatedProduto = produtoService.updateProduto(id, produtoUpdateFromDto);
         return ResponseEntity.status(HttpStatus.OK).body(ProdutoMapper.toDto(updatedProduto));
     }
+    @Operation(summary = "Recuperar um Produto pelo id", description = "Recurso para recuperar um Produto pelo ID",
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            description = "Recurso recuperado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProdutoResponseDto.class))),
+                    @ApiResponse(responseCode = "404",
+                            description = "Recurso não encontrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            })
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoResponseDto> getByID(@Valid @PathVariable Long id) {
         Produto produto = produtoService.buscarPorId(id);
