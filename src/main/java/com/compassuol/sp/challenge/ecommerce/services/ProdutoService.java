@@ -25,6 +25,7 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
+    @Transactional
     public Produto getProdutoById(Long id) {
         Optional<Produto> optionalProduto = produtoRepository.findById(id);
 
@@ -57,11 +58,12 @@ public class ProdutoService {
     }
 
 
+    @Transactional
     public void deleteProduto(Long id) {
         if (produtoRepository.existsById(id)) {
             produtoRepository.deleteById(id);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
+            throw new ProdutoNotFoundException("Produto não encontrado");
         }
     }
     @Transactional(readOnly = true)
