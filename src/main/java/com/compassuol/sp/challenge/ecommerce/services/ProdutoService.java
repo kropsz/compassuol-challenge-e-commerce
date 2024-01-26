@@ -25,6 +25,7 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
+    @Transactional
     public Produto getProdutoById(Long id) {
         Optional<Produto> optionalProduto = produtoRepository.findById(id);
 
@@ -47,7 +48,7 @@ public class ProdutoService {
     @Transactional
     public Produto updateProduto(Long id, Produto produto) {
         Produto produtoUpdate = produtoRepository.findById(id)
-            .orElseThrow(() -> new ProdutoNotFoundException("Produto não encontrado"));
+                .orElseThrow(() -> new ProdutoNotFoundException("Produto não encontrado"));
 
         produtoUpdate.setName(produto.getName());
         produtoUpdate.setDescription(produto.getDescription());
