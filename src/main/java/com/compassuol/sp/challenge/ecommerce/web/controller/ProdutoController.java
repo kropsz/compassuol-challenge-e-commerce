@@ -81,7 +81,7 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(ProdutoMapper.toDto(updatedProduto));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ProdutoResponseDto> getByID(@RequestBody @Valid @PathVariable Long id) {
+    public ResponseEntity<ProdutoResponseDto> getByID(@Valid @PathVariable Long id) {
         Produto produto = produtoService.buscarPorId(id);
         return ResponseEntity.ok(ProdutoMapper.toDto(produto));
     }
