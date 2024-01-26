@@ -1,5 +1,7 @@
 package com.compassuol.sp.challenge.ecommerce.web.dto;
 
+import java.math.BigDecimal;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -13,7 +15,7 @@ public class ProdutoCreateDto {
 
     @NotNull
     @Positive
-    private Long value;
+    private BigDecimal value;
 
     @NotBlank
     @Size(min = 10)

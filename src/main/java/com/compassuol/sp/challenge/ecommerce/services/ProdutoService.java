@@ -2,6 +2,7 @@ package com.compassuol.sp.challenge.ecommerce.services;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Produto;
 import com.compassuol.sp.challenge.ecommerce.exception.ProductNameUniqueViolation;
+import com.compassuol.sp.challenge.ecommerce.exception.ProdutoNotFoundException;
 import com.compassuol.sp.challenge.ecommerce.repository.ProdutoRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +35,7 @@ public class ProdutoService {
         }
     }
 
+    @Transactional
     public Produto salvar(Produto produto) {
         Optional<Produto> existingProduct = produtoRepository.findByName(produto.getName());
         if (existingProduct.isPresent()) {
@@ -41,14 +44,18 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
+    @Transactional
     public Produto updateProduto(Long id, Produto produto) {
-        if (produtoRepository.existsById(id)) {
-            produto.setId(id);
-            return produtoRepository.save(produto);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
-        }
+        Produto produtoUpdate = produtoRepository.findById(id)
+            .orElseThrow(() -> new ProdutoNotFoundException("Produto não encontrado"));
+
+        produtoUpdate.setName(produto.getName());
+        produtoUpdate.setDescription(produto.getDescription());
+        produtoUpdate.setValue(produto.getValue());
+
+        return produtoRepository.save(produtoUpdate);
     }
+
 
     public void deleteProduto(Long id) {
         if (produtoRepository.existsById(id)) {

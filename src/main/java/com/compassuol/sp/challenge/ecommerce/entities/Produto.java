@@ -1,14 +1,16 @@
 package com.compassuol.sp.challenge.ecommerce.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name = "products")
 public class Produto implements Serializable {
@@ -19,7 +21,7 @@ public class Produto implements Serializable {
     @Column(name = "name", nullable = false, unique = true, length = 100)
     private String name;
     @Column(name = "value", nullable = false)
-    private Long value;
+    private BigDecimal value;
     @Column(name = "description", nullable = false, length = 400)
     private String description;
     @Override

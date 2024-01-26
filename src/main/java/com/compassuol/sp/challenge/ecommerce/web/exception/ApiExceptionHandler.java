@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.compassuol.sp.challenge.ecommerce.exception.ProductNameUniqueViolation;
+import com.compassuol.sp.challenge.ecommerce.exception.ProdutoNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -29,5 +30,13 @@ public class ApiExceptionHandler {
                 .status(HttpStatus.CONFLICT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ErrorMessage("O campo nome é Inválido", request, HttpStatus.CONFLICT));
+    }
+
+    @ExceptionHandler(ProdutoNotFoundException.class)
+    public ResponseEntity<ErrorMessage> ProdutoNotFoundException(ProdutoNotFoundException ex, HttpServletRequest request){
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage("Produto não encontrado", request, HttpStatus.NOT_FOUND));
     }
 }
