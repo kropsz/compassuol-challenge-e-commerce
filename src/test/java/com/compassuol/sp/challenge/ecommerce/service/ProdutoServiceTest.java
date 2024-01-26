@@ -2,6 +2,8 @@ package com.compassuol.sp.challenge.ecommerce.service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 
 import java.util.Optional;
 
@@ -71,6 +73,25 @@ public class ProdutoServiceTest {
             productService.salvar(ProdutoMapper.toProduto(PRODUTO_INVALID_DTO));
         });
     }
+
+    @Test
+    public void deleteProduto_successfullyDeletes_WithValidId() {
+        when(produtoRepository.existsById(1L)).thenReturn(true);
+        Long id = 1L;
+
+        productService.deleteProduto(id);
+
+        verify(produtoRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    public void deleteProduto_failsToDelete_WithInvalidId() {
+        when(produtoRepository.existsById(1L)).thenReturn(false);
+        Long id = 1L;
+
+        assertThatThrownBy(() -> productService.deleteProduto(id)).isInstanceOf(ProdutoNotFoundException.class);
+    }
+
 
 }
 
