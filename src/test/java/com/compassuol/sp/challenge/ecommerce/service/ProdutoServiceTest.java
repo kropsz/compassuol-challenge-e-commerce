@@ -3,6 +3,9 @@ package com.compassuol.sp.challenge.ecommerce.service;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static com.compassuol.sp.challenge.ecommerce.common.ProdutoConstants.*;
@@ -72,5 +75,25 @@ public class ProdutoServiceTest {
         });
     }
 
+    @Test
+    public void getProdutos_ReturnAllProducts() {
+        List<Produto> products = new ArrayList<>(){{
+            add(PRODUTO);
+        }};
+        when(produtoRepository.findAll()).thenReturn(products);
+        List<Produto> sut = productService.getAllProdutos();
+
+        assertThat(sut).isNotEmpty();
+        assertThat(sut).hasSize(1);
+        assertThat(sut.get(0)).isEqualTo(PRODUTO);
+    }
+
+    @Test
+    public void getProdutos_ReturnNoProducts() {
+        when(produtoRepository.findAll()).thenReturn(Collections.emptyList());
+        List<Produto> sut = productService.getAllProdutos();
+
+        assertThat(sut).isEmpty();
+    }
 }
 
