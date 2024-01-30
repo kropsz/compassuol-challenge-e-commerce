@@ -1,11 +1,15 @@
 package com.compassuol.sp.challenge.ecommerce.services;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
+import com.compassuol.sp.challenge.ecommerce.exception.CancelamentoInvalidoException;
+import com.compassuol.sp.challenge.ecommerce.exception.PedidoNaoEncontradoException;
 import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,5 +22,22 @@ public class PedidoService {
     public Pedido salvar(Pedido orders) {
 
         return pedidoRepository.save(orders);
+    }
+
+
+    @Transactional
+    public Pedido cancelarPedido (Long id, String cancelReason) {
+        Pedido pedidoParaCancelar = pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException("O pedido não foi encontrado"));
+        
+        Duration duration = Duration.between(pedidoParaCancelar.getCreatedDate(), LocalDateTime.now());
+        long daysSinceCreation = (duration.toHours() + 23) / 24;
+
+        if (daysSinceCreation < 90 && !(pedidoParaCancelar.getStatus().equals(Pedido.Status.SENT))) {
+            pedidoParaCancelar.setStatus(Pedido.Status.CANCELED);
+            pedidoParaCancelar.setCancelReason(cancelReason);
+            return pedidoRepository.save(pedidoParaCancelar);
+        } else {
+            throw new CancelamentoInvalidoException("O pedido não pode ser cancelado");
+        }
     }
 }
