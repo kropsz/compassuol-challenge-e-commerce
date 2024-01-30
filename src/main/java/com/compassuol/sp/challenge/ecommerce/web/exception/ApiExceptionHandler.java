@@ -63,4 +63,28 @@ public class ApiExceptionHandler {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ErrorMessage("Erro interno do OpenFign", request, HttpStatus.INTERNAL_SERVER_ERROR));
     }
+
+    @ExceptionHandler(DataInvalidaException.class)
+    public ResponseEntity<ErrorMessage> DataInvalidaException(DataInvalidaException ex, HttpServletRequest request){
+        return ResponseEntity
+                .status(HttpStatus.UNPROCESSABLE_ENTITY )
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage("Data inválida", request, HttpStatus.UNPROCESSABLE_ENTITY));
+    }
+
+    @ExceptionHandler(MetodoDePagamentoInvalidoException.class)
+    public ResponseEntity<ErrorMessage> MetodoDePagamentoInvalidoException(MetodoDePagamentoInvalidoException ex, HttpServletRequest request){
+        return ResponseEntity
+                .status(HttpStatus.UNPROCESSABLE_ENTITY )
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage("Metodo de pagamento inválido", request, HttpStatus.UNPROCESSABLE_ENTITY));
+    }
+
+    @ExceptionHandler(StatusInvalidoException.class)
+    public ResponseEntity<ErrorMessage> StatusInvalidoException(StatusInvalidoException ex, HttpServletRequest request){
+        return ResponseEntity
+                .status(HttpStatus.UNPROCESSABLE_ENTITY )
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage("Status inválido", request, HttpStatus.UNPROCESSABLE_ENTITY));
+    }
 }
