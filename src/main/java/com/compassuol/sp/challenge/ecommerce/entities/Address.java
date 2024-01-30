@@ -9,12 +9,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -25,6 +27,9 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
+    
+    @Column(name = "street", nullable = false)
+    private String street;
     @Column(name = "number", nullable = false)
     private Integer number;
     @Column(name = "complement", nullable = false)
