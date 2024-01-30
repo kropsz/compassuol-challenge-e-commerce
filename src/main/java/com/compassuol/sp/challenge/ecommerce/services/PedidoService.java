@@ -32,12 +32,15 @@ public class PedidoService {
         Duration duration = Duration.between(pedidoParaCancelar.getCreatedDate(), LocalDateTime.now());
         long daysSinceCreation = (duration.toHours() + 23) / 24;
 
-        if (daysSinceCreation < 90 && !(pedidoParaCancelar.getStatus().equals(Pedido.Status.SENT))) {
+        
+        if (daysSinceCreation > 90) {
+            throw new CancelamentoInvalidoException("O pedido não pode ser cancelado, data de criação superior à 90 dias");
+        } else if ((pedidoParaCancelar.getStatus().equals(Pedido.Status.SENT))) {
+            throw new CancelamentoInvalidoException("O pedido não pode ser cancelado, porque já foi enviado");
+        } else {
             pedidoParaCancelar.setStatus(Pedido.Status.CANCELED);
             pedidoParaCancelar.setCancelReason(cancelReason);
             return pedidoRepository.save(pedidoParaCancelar);
-        } else {
-            throw new CancelamentoInvalidoException("O pedido não pode ser cancelado");
         }
     }
 }
