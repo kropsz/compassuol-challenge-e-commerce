@@ -16,7 +16,7 @@ public class PedidoConstants {
     //TODO: REVISAR AS CONSTANTES
     public static final Pedido PEDIDO = new Pedido(1L,
                                                     produtos,
-                                                    new Address(1L,123, "Casa", "João Monlevade", "Minas Gerais", "35930001"),
+                                                    new Address(),
                                                     Pedido.PaymentMethod.GIFT_CARD,
                                                     new BigDecimal(100.0),
                                                     new BigDecimal(0.01),
@@ -28,7 +28,7 @@ public class PedidoConstants {
 
     public static final Pedido PEDIDO_ENVIADO = new Pedido(1L,
                                                     produtos,
-                                                    new Address(1L,123, "Casa", "João Monlevade", "Minas Gerais", "35930001"),
+                                                    new Address(),
                                                     Pedido.PaymentMethod.GIFT_CARD,
                                                     new BigDecimal(100.0),
                                                     new BigDecimal(0.01),
@@ -40,7 +40,7 @@ public class PedidoConstants {
 
     public static final Pedido PEDIDO_EXPIRADO = new Pedido(1L,
                                                     produtos,
-                                                    new Address(1L,123, "Casa", "João Monlevade", "Minas Gerais", "35930001"),
+                                                    new Address(),
                                                     Pedido.PaymentMethod.GIFT_CARD,
                                                     new BigDecimal(100.0),
                                                     new BigDecimal(0.01),
