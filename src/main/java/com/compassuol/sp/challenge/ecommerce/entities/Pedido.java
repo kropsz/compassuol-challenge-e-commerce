@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -17,13 +19,19 @@ import java.util.Objects;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name = "orders")
-@EntityListeners(AuditingEntityListener.class)
 public class Pedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idPedido")
     private Long idPedido;
+    @ElementCollection
+    @CollectionTable(name = "faz_pedido", joinColumns = @JoinColumn(name = "order_id"))
+    private List<PedidoProduto> produtos;
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Address endereço;
     @Column(name = "payment_method", nullable = false)
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
     @Column(name = "subtotal_value")
     private BigDecimal subtotalValue;
@@ -31,13 +39,17 @@ public class Pedido implements Serializable {
     private BigDecimal discount;
     @Column(name = "total_value")
     private BigDecimal totalValue;
-    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime createdDate;
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private Status status;
     @Column(name = "cancel_reason", length = 400)
     private String cancelReason;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(name = "cancel_date")
     private LocalDateTime cancelDate;
 
