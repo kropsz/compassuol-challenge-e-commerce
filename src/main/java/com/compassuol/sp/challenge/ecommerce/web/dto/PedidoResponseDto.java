@@ -16,7 +16,7 @@ import java.util.List;
 public class PedidoResponseDto {
     private Long idPedido;
     private List<PedidoProduto> produtos;
-    private Address endereco;
+    private Address address;
     private Pedido.PaymentMethod paymentMethod;
     private BigDecimal subtotalValue;
     private BigDecimal discount;

@@ -8,12 +8,12 @@ public class AddressMapper {
     
     public static Address toAddressModel(Pedido request, ViaCepDto cep) {
         return Address.builder()
-                .number(request.getEndereço().getNumber())
-                .complement(cep.getComplemento())
+                .number(request.getAddress().getNumber())
+                .street(cep.getLogradouro())    
+                .complemento(request.getAddress().getComplemento())
                 .city(cep.getLocalidade())
                 .state(cep.getUf())
                 .postalCode(cep.getCep())
-                .street(request.getEndereço().getStreet())
                 .build();
 }
 }

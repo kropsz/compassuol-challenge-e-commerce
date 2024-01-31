@@ -24,9 +24,9 @@ public class Pedido implements Serializable {
     @ElementCollection
     @CollectionTable(name = "faz_pedido", joinColumns = @JoinColumn(name = "order_id"))
     private List<PedidoProduto> produtos;
-    @OneToOne
-    @JoinColumn(name = "id")
-    private Address endereço;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
     @Column(name = "payment_method", nullable = false)
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
