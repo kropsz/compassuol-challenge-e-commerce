@@ -36,13 +36,11 @@ public class PedidoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pedido> buscarPedidoPorId(@PathVariable Long id) {
-        try {
-            Pedido pedido = pedidoService.buscarPorId(id);
-            return ResponseEntity.ok(pedido);
-        } catch (PedidoNaoEncontradoException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<PedidoResponseDto> buscarPorId(@PathVariable Long id) {
+        Pedido pedido = pedidoService.buscarPorId(id);
+        return ResponseEntity.ok(PedidoMapper.toDto(pedido));
+
+
     }
 }
 
