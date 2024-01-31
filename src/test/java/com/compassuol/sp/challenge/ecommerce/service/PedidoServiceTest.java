@@ -57,7 +57,7 @@ public class PedidoServiceTest {
         String cancelReason = "teste";
         pedidoService.cancelarPedido(id, cancelReason);
         
-        assertThat(PEDIDO.getStatus()).isEqualTo(Status.CANCELED);
+        assertThat(PEDIDO.getStatus()).isEqualTo(Pedido.Status.CANCELED);
     }
 
 
