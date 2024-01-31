@@ -22,7 +22,7 @@ public class PedidoConstants {
                                                     new BigDecimal(0.01),
                                                     new BigDecimal(1000.00),
                                                     LocalDateTime.now().minus(1, ChronoUnit.DAYS),
-                                                    Status.CONFIRMED,
+                                                    Pedido.Status.CONFIRMED,
                                                     null,
                                                     LocalDateTime.now());
 
@@ -34,7 +34,7 @@ public class PedidoConstants {
                                                     new BigDecimal(0.01),
                                                     new BigDecimal(1000.00),
                                                     LocalDateTime.now().minus(1, ChronoUnit.DAYS),
-                                                    Status.SENT,
+                                                    Pedido.Status.SENT,
                                                     null,
                                                     LocalDateTime.now());
 
@@ -46,7 +46,7 @@ public class PedidoConstants {
                                                     new BigDecimal(0.01),
                                                     new BigDecimal(1000.00),
                                                     LocalDateTime.now().minus(90, ChronoUnit.DAYS),
-                                                    Status.SENT,
+                                                    Pedido.Status.SENT,
                                                     null,
                                                     LocalDateTime.now());
 }
