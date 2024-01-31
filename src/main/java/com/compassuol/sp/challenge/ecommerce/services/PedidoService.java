@@ -5,6 +5,7 @@ import com.compassuol.sp.challenge.ecommerce.exception.CancelamentoInvalidoExcep
 import com.compassuol.sp.challenge.ecommerce.exception.PedidoNaoEncontradoException;
 import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,5 +40,16 @@ public class PedidoService {
             pedidoParaCancelar.setCancelReason(cancelReason);
             return pedidoRepository.save(pedidoParaCancelar);
         }
+    }
+
+
+    @Autowired
+    public PedidoService(PedidoRepository pedidoRepository) {
+        this.pedidoRepository = pedidoRepository;
+    }
+
+    public Pedido buscarPorId(Long id) {
+        return pedidoRepository.findById(id)
+                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado"));
     }
 }
