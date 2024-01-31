@@ -5,9 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
-import com.compassuol.sp.challenge.ecommerce.entities.Status;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -62,7 +59,9 @@ public class Pedido implements Serializable {
         CREDIT_CARD, BANK_TRANSFER, CRYPTOCURRENCY, GIFT_CARD, PIX, OTHER
     }
 
-
+    public enum Status{
+        CONFIRMED, SENT, CANCELED
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

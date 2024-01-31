@@ -3,7 +3,6 @@ package com.compassuol.sp.challenge.ecommerce.web.dto;
 import com.compassuol.sp.challenge.ecommerce.entities.Address;
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
 import com.compassuol.sp.challenge.ecommerce.entities.PedidoProduto;
-import com.compassuol.sp.challenge.ecommerce.entities.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +22,5 @@ public class PedidoResponseDto {
     private BigDecimal discount;
     private BigDecimal totalValue;
     private LocalDateTime createdDate;
-    private Status status;
+    private Pedido.Status status;
 }
