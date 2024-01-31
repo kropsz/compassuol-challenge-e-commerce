@@ -42,7 +42,10 @@ public class PedidoController {
             responses = {
                     @ApiResponse(responseCode = "200",
                             description = "Recursos recuperados com sucesso",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class))),
+                    @ApiResponse(responseCode = "400",
+                            description = "Recurso não existe",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @GetMapping
