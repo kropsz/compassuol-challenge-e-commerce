@@ -1,11 +1,9 @@
 package com.compassuol.sp.challenge.ecommerce.web.controller;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
-import com.compassuol.sp.challenge.ecommerce.entities.Status;
 import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
 import com.compassuol.sp.challenge.ecommerce.web.dto.*;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.PedidoMapper;
-import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.ProdutoMapper;
 import com.compassuol.sp.challenge.ecommerce.web.exception.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -50,7 +48,7 @@ public class PedidoController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<PedidoResponseDto>> getAll(@RequestParam(required = false) Status status) {
+    public ResponseEntity<List<PedidoResponseDto>> getAll(@RequestParam(required = false) Pedido.Status status) {
         List<Pedido> pedidos = pedidoService.getAllPedidos(status);
         return ResponseEntity.ok(PedidoMapper.toListDto(pedidos));
     }
@@ -60,5 +58,21 @@ public class PedidoController {
         Pedido pedidoUpdateFromDto = PedidoMapper.toPedido(pedidoDto);
         Pedido pedidoAtualizado = pedidoService.updatePedido(id, pedidoUpdateFromDto);
         return ResponseEntity.status(HttpStatus.OK).body(PedidoMapper.toDto(pedidoAtualizado));
+    }
+
+    @Operation(summary = "Cancelar um pedido", description = "Recurso para cancelar um pedido existente",
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            description = "Pedido cancelado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class))),
+                    @ApiResponse(responseCode = "404",
+                            description = "Pedido não encontrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            }
+    )
+    @PostMapping("/{id}/cancel")
+    public ResponseEntity<PedidoResponseDto> cancelarPedido(@PathVariable Long id, @RequestBody String cancelReason) {
+        Pedido pedidoCancelado = pedidoService.cancelarPedido(id, cancelReason);
+        return ResponseEntity.ok(PedidoMapper.toDto(pedidoCancelado));
     }
 }
