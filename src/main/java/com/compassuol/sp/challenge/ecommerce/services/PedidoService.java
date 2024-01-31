@@ -5,6 +5,7 @@ import com.compassuol.sp.challenge.ecommerce.exception.CancelamentoInvalidoExcep
 import com.compassuol.sp.challenge.ecommerce.exception.PedidoNaoEncontradoException;
 import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

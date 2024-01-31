@@ -3,10 +3,18 @@ package com.compassuol.sp.challenge.ecommerce.service;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Optional;
 
 import static com.compassuol.sp.challenge.ecommerce.common.PedidoConstants.*;
+import static com.compassuol.sp.challenge.ecommerce.common.ProdutoConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,9 +26,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+
+import com.compassuol.sp.challenge.ecommerce.common.ProdutoConstants;
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
+import com.compassuol.sp.challenge.ecommerce.entities.Produto;
 import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
+import com.compassuol.sp.challenge.ecommerce.repository.ProdutoRepository;
 import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
+import com.compassuol.sp.challenge.ecommerce.services.ProdutoService;
+import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.ProdutoMapper;
 import com.compassuol.sp.challenge.ecommerce.exception.*;
 
 
