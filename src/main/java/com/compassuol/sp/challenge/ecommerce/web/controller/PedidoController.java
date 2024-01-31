@@ -39,6 +39,18 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(PedidoMapper.toDto(pedido));
     }
 
+    public PedidoController(PedidoService pedidoService) {
+        this.pedidoService = pedidoService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PedidoResponseDto> buscarPorId(@PathVariable Long id) {
+        Pedido pedido = pedidoService.buscarPorId(id);
+        return ResponseEntity.ok(PedidoMapper.toDto(pedido));
+
+
+    }
+
     @Operation(summary = "Recuperar todos os Pedidos ordenados por data de criação", description = "Recurso para recuperar todos os pedidos no banco de e ordená-los por data de criação",
             responses = {
                     @ApiResponse(responseCode = "200",
