@@ -4,6 +4,8 @@ import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
 import com.compassuol.sp.challenge.ecommerce.exception.CancelamentoInvalidoException;
 import com.compassuol.sp.challenge.ecommerce.exception.PedidoNaoEncontradoException;
 import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
+import com.compassuol.sp.challenge.ecommerce.web.dto.PedidoUpdateDto;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -47,5 +49,13 @@ public class PedidoService {
             pedidoParaCancelar.setCancelReason(cancelReason);
             return pedidoRepository.save(pedidoParaCancelar);
         }
+    }
+    
+    @Transactional
+    public Pedido updatePedido(Long id, PedidoUpdateDto PedidoUpdateDto) {
+        Pedido pedidoUpdate = pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException("O pedido não foi encontrado"));
+
+
+        return pedidoRepository.save(pedidoUpdate);
     }
 }
