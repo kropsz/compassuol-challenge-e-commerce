@@ -1,5 +1,6 @@
 package com.compassuol.sp.challenge.ecommerce.web.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.compassuol.sp.challenge.ecommerce.exception.*;
 
-import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
@@ -55,13 +55,13 @@ public class ApiExceptionHandler {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ErrorMessage("Pedido não encontrado", request, HttpStatus.NOT_FOUND));
     }
-
-    @ExceptionHandler(FeignException.class)
-    public ResponseEntity<ErrorMessage> FeignException(FeignException ex, HttpServletRequest request){
+    
+    @ExceptionHandler({ConectionException.class, DataIntegrityViolationException.class})
+    public ResponseEntity<ErrorMessage> ConectionException(RuntimeException ex, HttpServletRequest request){
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("Erro interno do OpenFign", request, HttpStatus.INTERNAL_SERVER_ERROR));
+                .body(new ErrorMessage("Cep inválido ou erro de conexão com a API externa", request, HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @ExceptionHandler(DataInvalidaException.class)
