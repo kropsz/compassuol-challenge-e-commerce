@@ -50,13 +50,31 @@ public class PedidoController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<PedidoResponseDto>> getAll(@RequestParam(required = false)Pedido.Status status) {
-        List<Pedido> prods = pedidoService.getAllPedidos(status);
-        return ResponseEntity.ok(PedidoMapper.toListDto(prods));
+    public ResponseEntity<List<PedidoResponseDto>> getAll(@RequestParam(required = false) Pedido.Status status) {
+        List<Pedido> pedidos = pedidoService.getAllPedidos(status);
+        return ResponseEntity.ok(PedidoMapper.toListDto(pedidos));
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoCreateDto pedido) {
-        Pedido pedidoUpdateFromDto = PedidoMapper.toPedido(pedido);
-        return ResponseEntity.status(HttpStatus.OK).body(ProdutoMapper.toDto(pedidoService.updatePedido(id, pedidoUpdateFromDto)));
+    public ResponseEntity<PedidoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoCreateDto pedidoDto) {
+        Pedido pedidoUpdateFromDto = PedidoMapper.toPedido(pedidoDto);
+        Pedido pedidoAtualizado = pedidoService.updatePedido(id, pedidoUpdateFromDto);
+        return ResponseEntity.status(HttpStatus.OK).body(PedidoMapper.toDto(pedidoAtualizado));
+    }
+
+    @Operation(summary = "Cancelar um pedido", description = "Recurso para cancelar um pedido existente",
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            description = "Pedido cancelado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class))),
+                    @ApiResponse(responseCode = "404",
+                            description = "Pedido não encontrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            }
+    )
+    @PostMapping("/{id}/cancel")
+    public ResponseEntity<PedidoResponseDto> cancelarPedido(@PathVariable Long id, @RequestBody String cancelReason) {
+        Pedido pedidoCancelado = pedidoService.cancelarPedido(id, cancelReason);
+        return ResponseEntity.ok(PedidoMapper.toDto(pedidoCancelado));
     }
 }
