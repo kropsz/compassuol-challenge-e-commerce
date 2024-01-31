@@ -32,6 +32,7 @@ import java.util.List;
 public class PedidoController {
     private final PedidoService pedidoService;
 
+
     @PostMapping()
     public ResponseEntity<PedidoResponseDto> create(@RequestBody @Valid PedidoCreateDto createDto) {
         Pedido pedido = pedidoService.salvar(PedidoMapper.toPedido(createDto));
@@ -52,5 +53,10 @@ public class PedidoController {
     public ResponseEntity<List<PedidoResponseDto>> getAll(@RequestParam(required = false)Pedido.Status status) {
         List<Pedido> prods = pedidoService.getAllPedidos(status);
         return ResponseEntity.ok(PedidoMapper.toListDto(prods));
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<ProdutoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoCreateDto pedido) {
+        Pedido pedidoUpdateFromDto = PedidoMapper.toPedido(pedido);
+        return ResponseEntity.status(HttpStatus.OK).body(ProdutoMapper.toDto(pedidoService.updatePedido(id, pedidoUpdateFromDto)));
     }
 }
