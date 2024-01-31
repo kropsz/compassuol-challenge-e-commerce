@@ -18,7 +18,7 @@ public class DescontoPedido {
     private BigDecimal totalValue;
     private BigDecimal discount;
 
-        public DescontoPedido conferirPromocao(PaymentMethod paymentMethod, BigDecimal subTotal){
+        public static DescontoPedido conferirPromocao(PaymentMethod paymentMethod, BigDecimal subTotal){
             BigDecimal discount = BigDecimal.ZERO;
             BigDecimal totalValue;
             BigDecimal discountPercentage;
