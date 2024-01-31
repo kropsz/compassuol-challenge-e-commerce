@@ -46,8 +46,8 @@ public class PedidoController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<PedidoResponseDto>> getAll() {
-        List<Pedido> prods = pedidoService.getAllPedidos();
+    public ResponseEntity<List<PedidoResponseDto>> getAll(@RequestParam(required = false)Pedido.Status status) {
+        List<Pedido> prods = pedidoService.getAllPedidos(status);
         return ResponseEntity.ok(PedidoMapper.toListDto(prods));
     }
 }

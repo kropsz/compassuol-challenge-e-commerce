@@ -5,6 +5,7 @@ import com.compassuol.sp.challenge.ecommerce.exception.CancelamentoInvalidoExcep
 import com.compassuol.sp.challenge.ecommerce.exception.PedidoNaoEncontradoException;
 import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +19,15 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
     @Transactional
     public Pedido salvar(Pedido orders) {
-        orders.setCreatedDate(LocalDateTime.now());
         return pedidoRepository.save(orders);
     }
 
     @Transactional
-    public List<Pedido> getAllPedidos() {
-        return pedidoRepository.findAllByOrderByCreatedDateDesc();
+    public List<Pedido> getAllPedidos(Pedido.Status status) {
+        if (status == null) {
+            return pedidoRepository.findAllByOrderByCreatedDateDesc();
+        }
+        return pedidoRepository.findAllByStatusOrderByCreatedDateDesc(status);
     }
 
     @Transactional
