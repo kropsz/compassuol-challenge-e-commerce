@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.compassuol.sp.challenge.ecommerce.entities.Status;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -55,7 +56,7 @@ public class PedidoServiceTest {
         String cancelReason = "teste";
         pedidoService.cancelarPedido(id, cancelReason);
         
-        assertThat(PEDIDO.getStatus()).isEqualTo(Pedido.Status.CANCELED);
+        assertThat(PEDIDO.getStatus()).isEqualTo(Status.CANCELED);
     }
 
 

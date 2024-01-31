@@ -1,7 +1,7 @@
 package com.compassuol.sp.challenge.ecommerce.web.controller;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
-import com.compassuol.sp.challenge.ecommerce.entities.Produto;
+import com.compassuol.sp.challenge.ecommerce.entities.Status;
 import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
 import com.compassuol.sp.challenge.ecommerce.web.dto.*;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.PedidoMapper;
@@ -50,13 +50,15 @@ public class PedidoController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<PedidoResponseDto>> getAll(@RequestParam(required = false)Pedido.Status status) {
-        List<Pedido> prods = pedidoService.getAllPedidos(status);
-        return ResponseEntity.ok(PedidoMapper.toListDto(prods));
+    public ResponseEntity<List<PedidoResponseDto>> getAll(@RequestParam(required = false) Status status) {
+        List<Pedido> pedidos = pedidoService.getAllPedidos(status);
+        return ResponseEntity.ok(PedidoMapper.toListDto(pedidos));
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoCreateDto pedido) {
-        Pedido pedidoUpdateFromDto = PedidoMapper.toPedido(pedido);
-        return ResponseEntity.status(HttpStatus.OK).body(ProdutoMapper.toDto(pedidoService.updatePedido(id, pedidoUpdateFromDto)));
+    public ResponseEntity<PedidoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoCreateDto pedidoDto) {
+        Pedido pedidoUpdateFromDto = PedidoMapper.toPedido(pedidoDto);
+        Pedido pedidoAtualizado = pedidoService.updatePedido(id, pedidoUpdateFromDto);
+        return ResponseEntity.status(HttpStatus.OK).body(PedidoMapper.toDto(pedidoAtualizado));
     }
 }

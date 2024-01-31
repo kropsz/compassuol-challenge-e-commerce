@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
+import com.compassuol.sp.challenge.ecommerce.entities.Status;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +20,7 @@ import java.util.Objects;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name = "orders")
+@EntityListeners(AuditingEntityListener.class)
 public class Pedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +51,9 @@ public class Pedido implements Serializable {
     @Column(name = "cancel_reason", length = 400)
     private String cancelReason;
 
+
+
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(name = "cancel_date")
     private LocalDateTime cancelDate;
@@ -57,9 +62,7 @@ public class Pedido implements Serializable {
         CREDIT_CARD, BANK_TRANSFER, CRYPTOCURRENCY, GIFT_CARD, PIX, OTHER
     }
 
-    public enum Status{
-        CONFIRMED, SENT, CANCELED
-    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
