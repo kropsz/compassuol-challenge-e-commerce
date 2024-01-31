@@ -43,11 +43,6 @@ public class PedidoService {
     }
 
 
-    @Autowired
-    public PedidoService(PedidoRepository pedidoRepository) {
-        this.pedidoRepository = pedidoRepository;
-    }
-
     public Pedido buscarPorId(Long id) {
         return pedidoRepository.findById(id)
                 .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado"));
