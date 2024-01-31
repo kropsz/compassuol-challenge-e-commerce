@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,10 +18,14 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
     @Transactional
     public Pedido salvar(Pedido orders) {
-
+        orders.setCreatedDate(LocalDateTime.now());
         return pedidoRepository.save(orders);
     }
 
+    @Transactional
+    public List<Pedido> getAllPedidos() {
+        return pedidoRepository.findAllByOrderByCreatedDateDesc();
+    }
 
     @Transactional
     public Pedido cancelarPedido (Long id, String cancelReason) {
