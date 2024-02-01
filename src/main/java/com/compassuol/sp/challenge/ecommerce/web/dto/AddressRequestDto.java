@@ -16,6 +16,6 @@ public class AddressRequestDto {
     @NotNull
     private Integer number;
     @NotEmpty
-    @Size(max = 9)
+    @Size(min = 8, max = 9)
     private String postalCode;
 }
