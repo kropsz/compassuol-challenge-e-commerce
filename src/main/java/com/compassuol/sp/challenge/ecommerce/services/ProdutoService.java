@@ -7,9 +7,7 @@ import com.compassuol.sp.challenge.ecommerce.repository.ProdutoRepository;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -23,17 +21,6 @@ public class ProdutoService {
 
     public List<Produto> getAllProdutos() {
         return produtoRepository.findAll();
-    }
-
-    @Transactional
-    public Produto getProdutoById(Long id) {
-        Optional<Produto> optionalProduto = produtoRepository.findById(id);
-
-        if (optionalProduto.isPresent()) {
-            return optionalProduto.get();
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
-        }
     }
 
     @Transactional

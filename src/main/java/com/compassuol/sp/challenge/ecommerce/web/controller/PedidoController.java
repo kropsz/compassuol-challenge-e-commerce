@@ -77,8 +77,8 @@ public class PedidoController {
             }
     )
     @PostMapping("/{id}/cancel")
-    public ResponseEntity<PedidoResponseDto> cancelarPedido(@PathVariable Long id, @RequestBody String cancelReason) {
-        Pedido pedidoCancelado = pedidoService.cancelarPedido(id, cancelReason);
+    public ResponseEntity<PedidoResponseDto> cancelarPedido(@PathVariable Long id, @RequestBody PedidoCancelDto cancelReason) {
+        Pedido pedidoCancelado = pedidoService.cancelarPedido(id, cancelReason.getCancelReason());
         return ResponseEntity.ok(PedidoMapper.toDto(pedidoCancelado));
     }
 }

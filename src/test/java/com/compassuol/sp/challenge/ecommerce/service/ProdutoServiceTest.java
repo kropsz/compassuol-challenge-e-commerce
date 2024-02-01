@@ -118,7 +118,7 @@ public class ProdutoServiceTest {
     @Test
     public void getById_succefull_WithValidId_returnProduct() {
         when(produtoRepository.findById(1L)).thenReturn(Optional.of(PRODUTO));
-        Produto sut = productService.getProdutoById(1L);
+        Produto sut = productService.buscarPorId(1L);
         assertThat(sut).isEqualTo(PRODUTO);
     }
 
