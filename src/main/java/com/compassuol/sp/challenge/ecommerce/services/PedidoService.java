@@ -60,13 +60,14 @@ public class PedidoService {
     public Pedido updatePedido(Long id, Pedido pedidoUpdateData) {
         Pedido pedidoUpdate = pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException("O pedido não foi encontrado"));
         
-        if (pedidoUpdateData.getStatus() == Pedido.Status.CANCELED) {
+        if (pedidoUpdate.getStatus() == Pedido.Status.CANCELED) {
             throw new PedidoUpdateErrorException("O pedido está cancelado, não pode ser atualizado");
+        } else if (pedidoUpdate.getStatus() == Pedido.Status.SENT) {
+            throw new PedidoUpdateErrorException("O pedido já foi enviado, não pode ser atualizado");
+        } else {
+            pedidoUpdate.setStatus(pedidoUpdateData.getStatus());
+            return pedidoRepository.save(pedidoUpdate);
         }
-
-        pedidoUpdate.setStatus(pedidoUpdateData.getStatus());
-
-        return pedidoRepository.save(pedidoUpdate);
     }
 }
 
