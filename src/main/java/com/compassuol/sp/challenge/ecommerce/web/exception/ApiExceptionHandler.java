@@ -87,4 +87,12 @@ public class ApiExceptionHandler {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ErrorMessage("Status inválido", request, HttpStatus.UNPROCESSABLE_ENTITY));
     }
+
+    @ExceptionHandler(PedidoUpdateErrorException.class)
+    public ResponseEntity<ErrorMessage> PedidoUpdateErrorException(PedidoUpdateErrorException ex, HttpServletRequest request){
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST )
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage("Falha de atualização", request, HttpStatus.BAD_REQUEST));
+    }
 }

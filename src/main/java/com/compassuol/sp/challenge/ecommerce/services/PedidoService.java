@@ -9,7 +9,13 @@ import com.compassuol.sp.challenge.ecommerce.exception.ConectionException;
 import com.compassuol.sp.challenge.ecommerce.feign.ViaCepFeign;
 import com.compassuol.sp.challenge.ecommerce.exception.CancelamentoInvalidoException;
 import com.compassuol.sp.challenge.ecommerce.exception.PedidoNaoEncontradoException;
+import com.compassuol.sp.challenge.ecommerce.exception.PedidoUpdateErrorException;
 import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
+
+import lombok.RequiredArgsConstructor;
+
+import org.apache.commons.lang3.EnumUtils;
+import org.springframework.data.domain.Example;
 import com.compassuol.sp.challenge.ecommerce.util.DescontoPedido;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ViaCepDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.AddressMapper;
@@ -24,7 +30,10 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Field;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -45,11 +54,24 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido updatePedido(Long id, Pedido pedidoAtualizado) {
-        Pedido pedidoExistente = pedidoRepository.findById(id)
-                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado"));
+    public Pedido updatePedido(Long id, Pedido pedidoUpdateData) {
+        Pedido pedidoUpdate = pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException("O pedido não foi encontrado"));
+        
+        if (pedidoUpdateData.getStatus() == null) {
+            throw new PedidoUpdateErrorException("O status do pedido deve ser informado");
+        }
+        if (!EnumUtils.isValidEnum(Pedido.Status.class, pedidoUpdateData.getStatus().name())) {
+            throw new PedidoUpdateErrorException("Status informado é inválido");
+        }
 
-        return pedidoRepository.save(pedidoExistente);
+        if (pedidoUpdate.getStatus() == Pedido.Status.CANCELED) {
+            throw new PedidoUpdateErrorException("O pedido está cancelado, não pode ser atualizado");
+        } else if (pedidoUpdate.getStatus() == Pedido.Status.SENT) {
+            throw new PedidoUpdateErrorException("O pedido já foi enviado, não pode ser atualizado");
+        } else {
+            pedidoUpdate.setStatus(pedidoUpdateData.getStatus());
+            return pedidoRepository.save(pedidoUpdate);
+        }
     }
 
     @Transactional
@@ -99,10 +121,12 @@ public class PedidoService {
         } else {
             pedidoParaCancelar.setStatus(Pedido.Status.CANCELED);
             pedidoParaCancelar.setCancelReason(cancelReason);
+            pedidoParaCancelar.setCancelDate(LocalDateTime.now());
             return pedidoRepository.save(pedidoParaCancelar);
         }
     }
-
+    
+    @Transactional
     public Pedido buscarPorId(Long id) {
         return pedidoRepository.findById(id)
                 .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado"));
