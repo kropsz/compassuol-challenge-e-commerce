@@ -42,7 +42,7 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido cancelarPedido (Long id, String cancelReason) {
+    public Pedido cancelarPedido(Long id, String cancelReason) {
         Pedido pedidoParaCancelar = pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException("O pedido não foi encontrado"));
 
         Duration duration = Duration.between(pedidoParaCancelar.getCreatedDate(), LocalDateTime.now());
@@ -57,5 +57,10 @@ public class PedidoService {
             pedidoParaCancelar.setCancelReason(cancelReason);
             return pedidoRepository.save(pedidoParaCancelar);
         }
+    }
+
+    public Pedido buscarPorId(Long id) {
+        return pedidoRepository.findById(id)
+                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado"));
     }
 }
