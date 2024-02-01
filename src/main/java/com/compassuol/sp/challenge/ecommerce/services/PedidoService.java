@@ -7,6 +7,8 @@ import com.compassuol.sp.challenge.ecommerce.exception.PedidoUpdateErrorExceptio
 import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
 
 import lombok.RequiredArgsConstructor;
+
+import org.apache.commons.lang3.EnumUtils;
 import org.springframework.data.domain.Example;
 
 import org.springframework.stereotype.Service;
@@ -60,6 +62,13 @@ public class PedidoService {
     public Pedido updatePedido(Long id, Pedido pedidoUpdateData) {
         Pedido pedidoUpdate = pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException("O pedido não foi encontrado"));
         
+        if (pedidoUpdateData.getStatus() == null) {
+            throw new PedidoUpdateErrorException("O status do pedido deve ser informado");
+        }
+        if (!EnumUtils.isValidEnum(Pedido.Status.class, pedidoUpdateData.getStatus().name())) {
+            throw new PedidoUpdateErrorException("Status informado é inválido");
+        }
+
         if (pedidoUpdate.getStatus() == Pedido.Status.CANCELED) {
             throw new PedidoUpdateErrorException("O pedido está cancelado, não pode ser atualizado");
         } else if (pedidoUpdate.getStatus() == Pedido.Status.SENT) {
