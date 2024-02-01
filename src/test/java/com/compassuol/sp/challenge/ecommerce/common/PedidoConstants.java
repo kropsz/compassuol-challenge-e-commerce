@@ -49,4 +49,31 @@ public class PedidoConstants {
                                                     Pedido.Status.SENT,
                                                     null,
                                                     LocalDateTime.now());
+    
+    public static final Pedido PEDIDO_CANCELADO = new Pedido(1L,
+                                                    produtos,
+                                                    new Address(),
+                                                    Pedido.PaymentMethod.GIFT_CARD,
+                                                    new BigDecimal(100.0),
+                                                    new BigDecimal(0.01),
+                                                    new BigDecimal(1000.00),
+                                                    LocalDateTime.now().minus(90, ChronoUnit.DAYS),
+                                                    Pedido.Status.CANCELED,
+                                                    null,
+                                                    LocalDateTime.now());
+
+    public static Pedido criarPedido(Long id, Pedido.Status status, int elapsedDays) {
+
+        return new Pedido(id,
+                        produtos,
+                        new Address(),
+                        Pedido.PaymentMethod.GIFT_CARD,
+                        new BigDecimal(100.0),
+                        new BigDecimal(0.01),
+                        new BigDecimal(1000.00),
+                        LocalDateTime.now().minus(elapsedDays, ChronoUnit.DAYS),
+                        status,
+                        null,
+                        LocalDateTime.now());
+    }
 }
