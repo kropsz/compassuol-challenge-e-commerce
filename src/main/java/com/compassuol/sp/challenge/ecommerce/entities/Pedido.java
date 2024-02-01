@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
-import org.springframework.data.annotation.CreatedDate;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -29,9 +28,9 @@ public class Pedido implements Serializable {
     @ElementCollection
     @CollectionTable(name = "faz_pedido", joinColumns = @JoinColumn(name = "order_id"))
     private List<PedidoProduto> produtos;
-    @OneToOne
-    @JoinColumn(name = "id")
-    private Address endereço;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
     @Column(name = "payment_method", nullable = false)
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;

@@ -33,7 +33,7 @@ public class Address {
     @Column(name = "number", nullable = false)
     private Integer number;
     @Column(name = "complement", nullable = false)
-    private String complement;
+    private String complemento;
     @Column(name = "city", nullable = false)
     private String city;
     @Column(name = "state", nullable = false)
