@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AddressRequestDto {
     @NotEmpty
-    private String street;
+    private String complemento;
     @NotNull
     private Integer number;
     @NotEmpty

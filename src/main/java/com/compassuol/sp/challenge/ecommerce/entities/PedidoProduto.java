@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 
-import java.util.Objects;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Embeddable
@@ -17,6 +16,6 @@ public class PedidoProduto {
     private Long idProduto;
     @NotNull
     @Positive
-    private Long quantidadeProduto;
+    private int quantidadeProduto;
 
 }
