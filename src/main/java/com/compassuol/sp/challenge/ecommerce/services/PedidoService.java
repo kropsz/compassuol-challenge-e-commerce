@@ -59,7 +59,7 @@ public class PedidoService {
                 Produto produto = produtoService.buscarPorId(pedidoProduto.getIdProduto());
                 BigDecimal produtoValue = produto.getValue();
                 subtotalValue = subtotalValue
-                .add(produtoValue.multiply(BigDecimal.valueOf(pedidoProduto.getQuantidadeProduto(), 4)));
+                .add(produtoValue.multiply(BigDecimal.valueOf(pedidoProduto.getQuantidadeProduto())));
             }
 
         try {
