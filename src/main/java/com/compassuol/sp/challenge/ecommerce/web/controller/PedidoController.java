@@ -43,8 +43,6 @@ public class PedidoController {
     public ResponseEntity<PedidoResponseDto> buscarPorId(@PathVariable Long id) {
         Pedido pedido = pedidoService.buscarPorId(id);
         return ResponseEntity.ok(PedidoMapper.toDto(pedido));
-
-
     }
 
     @Operation(summary = "Recuperar todos os Pedidos ordenados por data de criação", description = "Recurso para recuperar todos os pedidos no banco de e ordená-los por data de criação",
@@ -64,7 +62,7 @@ public class PedidoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PedidoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoCreateDto pedidoDto) {
+    public ResponseEntity<PedidoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoUpdateDto pedidoDto) {
         Pedido pedidoUpdateFromDto = PedidoMapper.toPedido(pedidoDto);
         Pedido pedidoAtualizado = pedidoService.updatePedido(id, pedidoUpdateFromDto);
         return ResponseEntity.status(HttpStatus.OK).body(PedidoMapper.toDto(pedidoAtualizado));

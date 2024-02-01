@@ -10,8 +10,5 @@ import java.util.List;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString
 public class PedidoUpdateDto {
-    private List<PedidoProduto> produtos;
-    private AddressRequestDto address;
-    private Pedido.PaymentMethod paymentMethod;
     private Pedido.Status status;
 }

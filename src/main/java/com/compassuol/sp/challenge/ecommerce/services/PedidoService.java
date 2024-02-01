@@ -61,38 +61,10 @@ public class PedidoService {
         Pedido pedidoUpdate = pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException("O pedido não foi encontrado"));
         
         if (pedidoUpdateData.getStatus() == Pedido.Status.CANCELED) {
-            throw new PedidoUpdateErrorException("O pedido está cancelado");
+            throw new PedidoUpdateErrorException("O pedido está cancelado, não pode ser atualizado");
         }
 
-        Field[] fields = Pedido.class.getDeclaredFields();
-
-        boolean hasNonNullField = Arrays.stream(fields)
-                .anyMatch(field -> {
-                    try {
-                        field.setAccessible(true);
-                        return field.get(pedidoUpdateData) != null && !field.get(pedidoUpdateData).toString().trim().isEmpty();
-                    } catch (IllegalAccessException e) {
-                        throw new PedidoUpdateErrorException("Erro ao acessar o campo " + field.getName());
-                    }
-                });
-
-        if (!hasNonNullField) {
-            throw new PedidoUpdateErrorException("Requisição vazia");
-        }
-        
-        Arrays.stream(fields)
-                .forEach(field -> {
-                    try {
-                        field.setAccessible(true);
-                        Object value = field.get(pedidoUpdateData);
-                        if (value != null && !value.toString().trim().isEmpty()) {
-                            field.set(pedidoUpdate, value);
-                        }
-                    } catch (IllegalAccessException e) {
-                        throw new PedidoUpdateErrorException("Erro ao acessar o campo " + field.getName());
-                    }
-                });
-
+        pedidoUpdate.setStatus(pedidoUpdateData.getStatus());
 
         return pedidoRepository.save(pedidoUpdate);
     }
