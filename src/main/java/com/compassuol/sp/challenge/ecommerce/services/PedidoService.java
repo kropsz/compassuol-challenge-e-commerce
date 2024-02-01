@@ -107,9 +107,13 @@ public class PedidoService {
             return pedido;
         }
 
-    
+    @Transactional
     public Pedido cancelarPedido (Long id, String cancelReason) {
         Pedido pedidoParaCancelar = pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException("O pedido não foi encontrado"));
+
+        if(cancelReason == null || cancelReason.isEmpty()) {
+            throw new CancelamentoInvalidoException("O motivo para cancelamento deve ser informado");
+        }
 
         Duration duration = Duration.between(pedidoParaCancelar.getCreatedDate(), LocalDateTime.now());
         long daysSinceCreation = (duration.toHours() + 23) / 24;
