@@ -55,8 +55,8 @@ public class PedidoController {
         return ResponseEntity.ok(PedidoMapper.toListDto(prods));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoCreateDto pedido) {
-        Pedido pedidoUpdateFromDto = PedidoMapper.toPedido(pedido);
-        return ResponseEntity.status(HttpStatus.OK).body(ProdutoMapper.toDto(pedidoService.updatePedido(id, pedidoUpdateFromDto)));
+    public ResponseEntity<PedidoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoUpdateDto pedido) {
+        Pedido pedidoUpdateFromDto = pedidoService.updatePedido(id, PedidoMapper.toPedido(pedido));
+        return ResponseEntity.status(HttpStatus.OK).body(PedidoMapper.toDto(pedidoUpdateFromDto));
     }
 }
