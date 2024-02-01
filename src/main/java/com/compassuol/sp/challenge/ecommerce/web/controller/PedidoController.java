@@ -1,11 +1,9 @@
 package com.compassuol.sp.challenge.ecommerce.web.controller;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
-import com.compassuol.sp.challenge.ecommerce.entities.Produto;
-import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
+ import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
 import com.compassuol.sp.challenge.ecommerce.web.dto.*;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.PedidoMapper;
-import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.ProdutoMapper;
 import com.compassuol.sp.challenge.ecommerce.web.exception.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

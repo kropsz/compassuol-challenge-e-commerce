@@ -20,13 +20,11 @@ import lombok.RequiredArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import org.springframework.data.domain.Example;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,6 +32,8 @@ import java.util.List;
 public class PedidoService {
 
     private final PedidoRepository pedidoRepository;
+    private final ProdutoService produtoService;
+    private final ViaCepFeign viaCepFeign;
 
     @Transactional
     public List<Pedido> getAllPedidos(Pedido.Status status) {
@@ -51,9 +51,6 @@ public class PedidoService {
 
         return pedidoRepository.save(pedidoExistente);
     }
-
-    private final ProdutoService produtoService;
-    private final ViaCepFeign viaCepFeign;
 
     @Transactional
     public Pedido salvar(Pedido pedido) {
@@ -88,7 +85,7 @@ public class PedidoService {
             return pedido;
         }
 
-}
+    
     public Pedido cancelarPedido (Long id, String cancelReason) {
         Pedido pedidoParaCancelar = pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException("O pedido não foi encontrado"));
 
@@ -105,3 +102,4 @@ public class PedidoService {
             return pedidoRepository.save(pedidoParaCancelar);
         }
     }
+}
