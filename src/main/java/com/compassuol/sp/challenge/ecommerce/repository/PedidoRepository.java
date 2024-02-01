@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     public List<Pedido> findAllByOrderByCreatedDateDesc();
     public List<Pedido> findAllByStatusOrderByCreatedDateDesc(Pedido.Status status);
+    List<Pedido> findByStatus(Pedido status);
 }
+

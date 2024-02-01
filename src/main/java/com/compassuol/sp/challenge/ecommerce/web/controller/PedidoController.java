@@ -39,6 +39,14 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(PedidoMapper.toDto(pedido));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PedidoResponseDto> buscarPorId(@PathVariable Long id) {
+        Pedido pedido = pedidoService.buscarPorId(id);
+        return ResponseEntity.ok(PedidoMapper.toDto(pedido));
+
+
+    }
+
     @Operation(summary = "Recuperar todos os Pedidos ordenados por data de criação", description = "Recurso para recuperar todos os pedidos no banco de e ordená-los por data de criação",
             responses = {
                     @ApiResponse(responseCode = "200",
@@ -50,13 +58,31 @@ public class PedidoController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<PedidoResponseDto>> getAll(@RequestParam(required = false)Pedido.Status status) {
-        List<Pedido> prods = pedidoService.getAllPedidos(status);
-        return ResponseEntity.ok(PedidoMapper.toListDto(prods));
+    public ResponseEntity<List<PedidoResponseDto>> getAll(@RequestParam(required = false) Pedido.Status status) {
+        List<Pedido> pedidos = pedidoService.getAllPedidos(status);
+        return ResponseEntity.ok(PedidoMapper.toListDto(pedidos));
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<PedidoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoUpdateDto pedido) {
-        Pedido pedidoUpdateFromDto = pedidoService.updatePedido(id, PedidoMapper.toPedido(pedido));
-        return ResponseEntity.status(HttpStatus.OK).body(PedidoMapper.toDto(pedidoUpdateFromDto));
+    public ResponseEntity<PedidoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoCreateDto pedidoDto) {
+        Pedido pedidoUpdateFromDto = PedidoMapper.toPedido(pedidoDto);
+        Pedido pedidoAtualizado = pedidoService.updatePedido(id, pedidoUpdateFromDto);
+        return ResponseEntity.status(HttpStatus.OK).body(PedidoMapper.toDto(pedidoAtualizado));
+    }
+
+    @Operation(summary = "Cancelar um pedido", description = "Recurso para cancelar um pedido existente",
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            description = "Pedido cancelado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class))),
+                    @ApiResponse(responseCode = "404",
+                            description = "Pedido não encontrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            }
+    )
+    @PostMapping("/{id}/cancel")
+    public ResponseEntity<PedidoResponseDto> cancelarPedido(@PathVariable Long id, @RequestBody String cancelReason) {
+        Pedido pedidoCancelado = pedidoService.cancelarPedido(id, cancelReason);
+        return ResponseEntity.ok(PedidoMapper.toDto(pedidoCancelado));
     }
 }

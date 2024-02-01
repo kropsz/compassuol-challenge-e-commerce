@@ -8,6 +8,7 @@ import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,27 +22,28 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PedidoService {
     private final PedidoRepository pedidoRepository;
+
     @Transactional
-    public Pedido salvar(Pedido orders) {
-        return pedidoRepository.save(orders);
+    public Pedido salvar(Pedido pedido) {
+        return pedidoRepository.save(pedido);
     }
 
     @Transactional
     public List<Pedido> getAllPedidos(Pedido.Status status) {
-        if (status == null) {
+        if (status != null) {
+            return pedidoRepository.findAllByStatusOrderByCreatedDateDesc(status);
+        } else {
             return pedidoRepository.findAllByOrderByCreatedDateDesc();
         }
-        return pedidoRepository.findAllByStatusOrderByCreatedDateDesc(status);
     }
 
     @Transactional
     public Pedido cancelarPedido (Long id, String cancelReason) {
         Pedido pedidoParaCancelar = pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradoException("O pedido não foi encontrado"));
-        
+
         Duration duration = Duration.between(pedidoParaCancelar.getCreatedDate(), LocalDateTime.now());
         long daysSinceCreation = (duration.toHours() + 23) / 24;
 
-        
         if (daysSinceCreation > 90) {
             throw new CancelamentoInvalidoException("O pedido não pode ser cancelado, data de criação superior à 90 dias");
         } else if ((pedidoParaCancelar.getStatus().equals(Pedido.Status.SENT))) {
@@ -95,3 +97,4 @@ public class PedidoService {
         return pedidoRepository.save(pedidoUpdate);
     }
 }
+
