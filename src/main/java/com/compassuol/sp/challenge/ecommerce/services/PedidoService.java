@@ -90,7 +90,7 @@ public class PedidoService {
             DescontoPedido desconto = DescontoPedido.conferirPromocao(pedido.getPaymentMethod(), subtotalValue);
             pedido = constroiPedido(pedido, desconto, address, subtotalValue);
         } catch (FeignException ex) {
-            throw new ConectionException("");
+            throw new ConectionException("Cep inválido ou erro de conexão com a API externa");
         }
 
         return pedidoRepository.save(pedido);

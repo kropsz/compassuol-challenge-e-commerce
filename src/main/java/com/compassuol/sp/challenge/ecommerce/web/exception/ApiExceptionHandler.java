@@ -4,6 +4,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,7 +22,7 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("Campo(s) Inválidos", request, result, HttpStatus.UNPROCESSABLE_ENTITY));
+                .body(new ErrorMessage(ex.getMessage(), request, result, HttpStatus.UNPROCESSABLE_ENTITY));
     }
 
     @ExceptionHandler(ProductNameUniqueViolation.class)
@@ -29,7 +30,7 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("O campo nome é Inválido", request, HttpStatus.CONFLICT));
+                .body(new ErrorMessage(ex.getMessage(), request, HttpStatus.CONFLICT));
     }
 
     @ExceptionHandler(ProdutoNotFoundException.class)
@@ -37,7 +38,7 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("Produto não encontrado", request, HttpStatus.NOT_FOUND));
+                .body(new ErrorMessage(ex.getMessage(), request, HttpStatus.NOT_FOUND));
     }
 
     @ExceptionHandler(CancelamentoInvalidoException.class)
@@ -45,7 +46,7 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("Cancelamento inválido", request, HttpStatus.BAD_REQUEST));
+                .body(new ErrorMessage(ex.getMessage(), request, HttpStatus.BAD_REQUEST));
     }
 
     @ExceptionHandler(PedidoNaoEncontradoException.class)
@@ -53,7 +54,7 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("Pedido não encontrado", request, HttpStatus.NOT_FOUND));
+                .body(new ErrorMessage(ex.getMessage(), request, HttpStatus.NOT_FOUND));
     }
     
     @ExceptionHandler({ConectionException.class, DataIntegrityViolationException.class})
@@ -61,7 +62,7 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("Cep inválido ou erro de conexão com a API externa", request, HttpStatus.INTERNAL_SERVER_ERROR));
+                .body(new ErrorMessage(ex.getMessage(), request, HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @ExceptionHandler(DataInvalidaException.class)
@@ -69,23 +70,23 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY )
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("Data inválida", request, HttpStatus.UNPROCESSABLE_ENTITY));
+                .body(new ErrorMessage(ex.getMessage(), request, HttpStatus.UNPROCESSABLE_ENTITY));
     }
 
-    @ExceptionHandler(MetodoDePagamentoInvalidoException.class)
-    public ResponseEntity<ErrorMessage> MetodoDePagamentoInvalidoException(MetodoDePagamentoInvalidoException ex, HttpServletRequest request){
+     @ExceptionHandler({MetodoDePagamentoInvalidoException.class, HttpMessageNotReadableException.class})
+    public ResponseEntity<ErrorMessage> MetodoDePagamentoInvalidoException(RuntimeException ex, HttpServletRequest request){
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY )
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("Metodo de pagamento inválido", request, HttpStatus.UNPROCESSABLE_ENTITY));
+                .body(new ErrorMessage(ex.getMessage(), request, HttpStatus.UNPROCESSABLE_ENTITY));
     }
-
+    
     @ExceptionHandler(StatusInvalidoException.class)
     public ResponseEntity<ErrorMessage> StatusInvalidoException(StatusInvalidoException ex, HttpServletRequest request){
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY )
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("Status inválido", request, HttpStatus.UNPROCESSABLE_ENTITY));
+                .body(new ErrorMessage(ex.getMessage(), request, HttpStatus.UNPROCESSABLE_ENTITY));
     }
 
     @ExceptionHandler(PedidoUpdateErrorException.class)
@@ -93,6 +94,6 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST )
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage("Falha de atualização", request, HttpStatus.BAD_REQUEST));
+                .body(new ErrorMessage(ex.getMessage(), request, HttpStatus.BAD_REQUEST));
     }
 }
