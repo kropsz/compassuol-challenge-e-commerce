@@ -6,6 +6,7 @@ import com.compassuol.sp.challenge.ecommerce.entities.PedidoProduto;
 import com.compassuol.sp.challenge.ecommerce.entities.Produto;
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido.Status;
 import com.compassuol.sp.challenge.ecommerce.exception.ConectionException;
+import com.compassuol.sp.challenge.ecommerce.exception.MetodoDePagamentoInvalidoException;
 import com.compassuol.sp.challenge.ecommerce.feign.ViaCepFeign;
 import com.compassuol.sp.challenge.ecommerce.exception.CancelamentoInvalidoException;
 import com.compassuol.sp.challenge.ecommerce.exception.PedidoNaoEncontradoException;
@@ -15,13 +16,11 @@ import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.lang3.EnumUtils;
-import org.springframework.data.domain.Example;
 import com.compassuol.sp.challenge.ecommerce.util.DescontoPedido;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ViaCepDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.AddressMapper;
 
 import feign.FeignException;
-import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -30,10 +29,8 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Field;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Arrays;
+
 import java.util.List;
 
 @Service
@@ -76,6 +73,9 @@ public class PedidoService {
 
     @Transactional
     public Pedido salvar(Pedido pedido) {
+          if (!EnumUtils.isValidEnum(Pedido.PaymentMethod.class, pedido.getPaymentMethod().name())) {
+            throw new MetodoDePagamentoInvalidoException("Método de pagamento invalido"); 
+           } 
         BigDecimal subtotalValue = BigDecimal.ZERO;
         for (PedidoProduto pedidoProduto : pedido.getProdutos()) {
                 Produto produto = produtoService.buscarPorId(pedidoProduto.getIdProduto());
