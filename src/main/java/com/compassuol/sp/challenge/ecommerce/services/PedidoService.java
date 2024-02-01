@@ -102,4 +102,9 @@ public class PedidoService {
             return pedidoRepository.save(pedidoParaCancelar);
         }
     }
+
+    public Pedido buscarPorId(Long id) {
+        return pedidoRepository.findById(id)
+                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido não encontrado"));
+    }
 }

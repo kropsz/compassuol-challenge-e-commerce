@@ -37,10 +37,6 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(PedidoMapper.toDto(pedido));
     }
 
-    public PedidoController(PedidoService pedidoService) {
-        this.pedidoService = pedidoService;
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<PedidoResponseDto> buscarPorId(@PathVariable Long id) {
         Pedido pedido = pedidoService.buscarPorId(id);
