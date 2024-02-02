@@ -7,16 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.compassuol.sp.challenge.ecommerce.entities.*;
+import com.compassuol.sp.challenge.ecommerce.web.dto.AddressRequestDto;
+import com.compassuol.sp.challenge.ecommerce.web.dto.PedidoCreateDto;
 
-import static com.compassuol.sp.challenge.ecommerce.common.ProdutoConstants.*;
 
 public class PedidoConstants {
-    public static List<PedidoProduto> produtos;
+    public static List<PedidoProduto> produtos = new ArrayList<>();
+    public static final PedidoProduto produto = new PedidoProduto(1L, 1);
+    
+    public static List<PedidoProduto> iniciaLista(List<PedidoProduto> produtos, PedidoProduto produto){
+        produtos.add(produto);
+        return produtos;
+    }
 
     //TODO: REVISAR AS CONSTANTES
     public static final Pedido PEDIDO = new Pedido(1L,
-                                                    produtos,
-                                                    new Address(),
+                                                    iniciaLista(produtos, produto),
+                                                    new Address(1L,"street", 4, "complement", "city", "state", "39802077"),
                                                     Pedido.PaymentMethod.GIFT_CARD,
                                                     new BigDecimal(100.0),
                                                     new BigDecimal(0.01),
@@ -76,4 +83,24 @@ public class PedidoConstants {
                         null,
                         LocalDateTime.now());
     }
+
+    
+    public static final PedidoCreateDto PEDIDO_CREATE = new PedidoCreateDto(iniciaLista(produtos, produto),
+            new AddressRequestDto("Rua",
+                    4,
+                    "39802077"),
+            Pedido.PaymentMethod.PIX);
+
+            
+    public static final PedidoCreateDto PEDIDO_CREATE_INVALID_CEP = new PedidoCreateDto(iniciaLista(produtos, produto),
+    new AddressRequestDto("Rua Exemplo",
+            4,
+            "000000000"),
+    Pedido.PaymentMethod.PIX);
+
+    public static final PedidoCreateDto PEDIDO_CREATE_INVALID = new PedidoCreateDto(iniciaLista(produtos, produto),
+    new AddressRequestDto(" ",
+            4,
+            ""),
+    Pedido.PaymentMethod.PIX);
 }
