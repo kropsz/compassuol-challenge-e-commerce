@@ -2,10 +2,7 @@ package com.compassuol.sp.challenge.ecommerce.web.controller;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
 import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
-import com.compassuol.sp.challenge.ecommerce.web.dto.PedidoCancelDto;
-import com.compassuol.sp.challenge.ecommerce.web.dto.PedidoCreateDto;
-import com.compassuol.sp.challenge.ecommerce.web.dto.PedidoResponseDto;
-import com.compassuol.sp.challenge.ecommerce.web.dto.PedidoUpdateDto;
+import com.compassuol.sp.challenge.ecommerce.web.dto.*;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.PedidoMapper;
 import com.compassuol.sp.challenge.ecommerce.web.exception.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
