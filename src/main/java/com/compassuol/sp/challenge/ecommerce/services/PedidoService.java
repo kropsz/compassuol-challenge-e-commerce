@@ -5,14 +5,11 @@ import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
 import com.compassuol.sp.challenge.ecommerce.entities.PedidoProduto;
 import com.compassuol.sp.challenge.ecommerce.entities.Produto;
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido.Status;
-import com.compassuol.sp.challenge.ecommerce.exception.ConectionException;
-import com.compassuol.sp.challenge.ecommerce.exception.MetodoDePagamentoInvalidoException;
+import com.compassuol.sp.challenge.ecommerce.exception.*;
 import com.compassuol.sp.challenge.ecommerce.feign.ViaCepFeign;
-import com.compassuol.sp.challenge.ecommerce.exception.CancelamentoInvalidoException;
-import com.compassuol.sp.challenge.ecommerce.exception.PedidoNaoEncontradoException;
-import com.compassuol.sp.challenge.ecommerce.exception.PedidoUpdateErrorException;
 import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
 
+import com.compassuol.sp.challenge.ecommerce.repository.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.lang3.EnumUtils;
@@ -31,7 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,11 +39,15 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
     private final ProdutoService produtoService;
     private final ViaCepFeign viaCepFeign;
+    private final ProdutoRepository produtoRepository;
 
     @Transactional
-    public List<Pedido> getAllPedidos(Pedido.Status status) {
-        if (status != null) {
-            return pedidoRepository.findAllByStatusOrderByCreatedDateDesc(status);
+    public List<Pedido> getAllPedidos(String status) throws StatusInvalidoException{
+        if (status != null || !status.isEmpty()) {
+            if (!EnumUtils.isValidEnum(Pedido.Status.class, status)) {
+                throw new StatusInvalidoException("Status informado é inválido");
+            }
+            return pedidoRepository.findAllByStatusOrderByCreatedDateDesc(Status.valueOf(status));
         } else {
             return pedidoRepository.findAllByOrderByCreatedDateDesc();
         }
@@ -78,8 +81,8 @@ public class PedidoService {
            } 
         BigDecimal subtotalValue = BigDecimal.ZERO;
         for (PedidoProduto pedidoProduto : pedido.getProdutos()) {
-                Produto produto = produtoService.buscarPorId(pedidoProduto.getIdProduto());
-                BigDecimal produtoValue = produto.getValue();
+                Optional<Produto> produto = produtoRepository.findById(pedidoProduto.getIdProduto());
+                BigDecimal produtoValue = produto.get().getValue();
                 subtotalValue = subtotalValue
                 .add(produtoValue.multiply(BigDecimal.valueOf(pedidoProduto.getQuantidadeProduto())));
             }
