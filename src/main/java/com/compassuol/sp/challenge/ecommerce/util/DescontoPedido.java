@@ -2,7 +2,7 @@ package com.compassuol.sp.challenge.ecommerce.util;
 
 import java.math.BigDecimal;
 
-import com.compassuol.sp.challenge.ecommerce.entities.Pedido.PaymentMethod;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Pedido.PaymentMethod;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

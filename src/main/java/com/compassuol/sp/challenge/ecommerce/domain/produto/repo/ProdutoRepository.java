@@ -1,7 +1,7 @@
-package com.compassuol.sp.challenge.ecommerce.repository;
+package com.compassuol.sp.challenge.ecommerce.domain.produto.repo;
 
 
-import com.compassuol.sp.challenge.ecommerce.entities.Produto;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.model.Produto;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

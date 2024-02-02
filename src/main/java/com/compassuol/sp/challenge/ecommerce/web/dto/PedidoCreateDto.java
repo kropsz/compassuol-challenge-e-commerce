@@ -1,7 +1,7 @@
 package com.compassuol.sp.challenge.ecommerce.web.dto;
 
-import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
-import com.compassuol.sp.challenge.ecommerce.entities.PedidoProduto;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Pedido;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.PedidoProduto;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

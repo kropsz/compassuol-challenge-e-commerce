@@ -1,5 +1,13 @@
 # e-Commerce
 
+| E-Mail                               | Usuário Github |
+|--------------------------------------|----------------|
+| pedro.guedes.pb@compasso.com.br      | kropsz         |
+| francis.sa.pb@compasso.com.br        | Kitricorvus    |
+| edson.paschoal.pb@compasso.com.br    | sshEdd1e       |
+| luan.nazareth.pb@compasso.com.br     | luanelder01    |
+| bruno.vendruscolo.pb@compasso.com.br | Vendru         |
+
 O projeto consiste no desenvolvimento de uma API REST para um e-commerce, utilizando as
 tecnologias e conhecimentos aprendidos no curso. projeto desenvolvido pela equipe NullPointeException no Programa de Bolsa - CompassUOL.
 

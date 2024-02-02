@@ -1,4 +1,4 @@
-package com.compassuol.sp.challenge.ecommerce.entities;
+package com.compassuol.sp.challenge.ecommerce.domain.pedido.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

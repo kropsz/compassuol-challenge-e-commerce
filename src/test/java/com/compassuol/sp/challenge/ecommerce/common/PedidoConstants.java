@@ -6,7 +6,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.compassuol.sp.challenge.ecommerce.entities.*;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Address;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Pedido;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.PedidoProduto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.AddressRequestDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.PedidoCreateDto;
 

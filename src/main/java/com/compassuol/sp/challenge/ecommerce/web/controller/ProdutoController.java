@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.compassuol.sp.challenge.ecommerce.entities.Produto;
-import com.compassuol.sp.challenge.ecommerce.services.ProdutoService;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.model.Produto;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.service.ProdutoService;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ProdutoCreateDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ProdutoResponseDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.ProdutoMapper;

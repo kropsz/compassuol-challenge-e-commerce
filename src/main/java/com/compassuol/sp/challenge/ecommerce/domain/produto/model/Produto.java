@@ -1,4 +1,4 @@
-package com.compassuol.sp.challenge.ecommerce.entities;
+package com.compassuol.sp.challenge.ecommerce.domain.produto.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -2,7 +2,7 @@ package com.compassuol.sp.challenge.ecommerce.common;
 
 import java.math.BigDecimal;
 
-import com.compassuol.sp.challenge.ecommerce.entities.Produto;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.model.Produto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ProdutoCreateDto;
 
 
