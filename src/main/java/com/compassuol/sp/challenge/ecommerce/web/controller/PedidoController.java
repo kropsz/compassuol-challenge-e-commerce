@@ -30,13 +30,35 @@ import java.util.List;
 public class PedidoController {
     private final PedidoService pedidoService;
 
-
+    @Operation(summary = "Criar um novo Pedido", description = "Recurso para criar um novo pedido",
+            responses = {
+                    @ApiResponse(responseCode = "201",
+                            description = "Pedido criado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class))),
+                    @ApiResponse(responseCode = "422",
+                            description = "Erro de validação",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+                    @ApiResponse(responseCode = "500",
+                            description = "Erro interno do servidor",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))        
+            }
+    )
     @PostMapping()
     public ResponseEntity<PedidoResponseDto> create(@RequestBody @Valid PedidoCreateDto createDto) {
         Pedido pedido = pedidoService.salvar(PedidoMapper.toPedido(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(PedidoMapper.toDto(pedido));
     }
 
+    @Operation(summary = "Recuperar um Pedido por ID", description = "Recurso para recuperar um pedido existente por ID",
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            description = "Recurso recuperado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class))),
+                    @ApiResponse(responseCode = "404",
+                            description = "Recurso não encontrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            }
+    )
     @GetMapping("/{id}")
     public ResponseEntity<PedidoResponseDto> buscarPorId(@PathVariable Long id) {
         Pedido pedido = pedidoService.buscarPorId(id);
@@ -59,6 +81,22 @@ public class PedidoController {
         return ResponseEntity.ok(PedidoMapper.toListDto(pedidos));
     }
 
+    @Operation(summary = "Atualizar um Pedido", description = "Recurso para atualizar um pedido existente",
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            description = "Pedido atualizado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class))),
+                    @ApiResponse(responseCode = "404",
+                            description = "Pedido não encontrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+                    @ApiResponse(responseCode = "400",
+                            description = "BadRequest",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+                    @ApiResponse(responseCode = "422",
+                            description = "Erro de validação",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            }
+    )
     @PutMapping("/{id}")
     public ResponseEntity<PedidoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoUpdateDto pedidoDto) {
         Pedido pedidoUpdateFromDto = PedidoMapper.toPedido(pedidoDto);
@@ -73,6 +111,9 @@ public class PedidoController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class))),
                     @ApiResponse(responseCode = "404",
                             description = "Pedido não encontrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+                    @ApiResponse(responseCode = "400",
+                            description = "BadRequest",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
