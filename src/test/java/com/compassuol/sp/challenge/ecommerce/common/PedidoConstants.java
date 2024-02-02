@@ -103,4 +103,16 @@ public class PedidoConstants {
             4,
             ""),
     Pedido.PaymentMethod.PIX);
+
+    public static final PedidoCreateDto PEDIDO_VALID_DTO = new PedidoCreateDto(produtos,
+            new AddressRequestDto("teste", 73573, "36307240"),
+            Pedido.PaymentMethod.PIX);
+
+    public static final PedidoCreateDto PEDIDO_INVALID_PAYMENT_DTO = new PedidoCreateDto(produtos,
+            new AddressRequestDto("", 73573, "123456789"),
+            Pedido.PaymentMethod.CREDIT_CARD);
+
+    public static final PedidoCreateDto PEDIDO_INVALID_CEP_DTO = new PedidoCreateDto(produtos,
+            new AddressRequestDto("", 73573, "1234567"),
+            Pedido.PaymentMethod.PIX);
 }
