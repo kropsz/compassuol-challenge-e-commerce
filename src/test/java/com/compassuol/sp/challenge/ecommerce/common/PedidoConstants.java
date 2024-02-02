@@ -20,7 +20,6 @@ public class PedidoConstants {
         return produtos;
     }
 
-    //TODO: REVISAR AS CONSTANTES
     public static final Pedido PEDIDO = new Pedido(1L,
                                                     iniciaLista(produtos, produto),
                                                     new Address(1L,"street", 4, "complement", "city", "state", "39802077"),
