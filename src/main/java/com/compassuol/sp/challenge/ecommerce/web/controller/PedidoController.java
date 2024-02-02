@@ -1,7 +1,7 @@
 package com.compassuol.sp.challenge.ecommerce.web.controller;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
-import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
+ import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
 import com.compassuol.sp.challenge.ecommerce.web.dto.*;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.PedidoMapper;
 import com.compassuol.sp.challenge.ecommerce.web.exception.ErrorMessage;
@@ -29,9 +29,11 @@ import java.util.List;
 public class PedidoController {
     private final PedidoService pedidoService;
 
-    @PostMapping
+
+    @PostMapping()
     @Operation(summary = "Criar um novo pedido", description = "Cria um novo pedido no sistema")
-    @ApiResponse(responseCode = "201", description = "Pedido criado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class)))
+    @ApiResponse(responseCode = "201", description = "Pedido criado com sucesso", content = @Content(mediaType = "application/json", schema =
+    @Schema(implementation = PedidoResponseDto.class)))
     public ResponseEntity<PedidoResponseDto> create(@RequestBody @Valid PedidoCreateDto createDto) {
         Pedido pedido = pedidoService.salvar(PedidoMapper.toPedido(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(PedidoMapper.toDto(pedido));
@@ -39,8 +41,10 @@ public class PedidoController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar pedido por ID", description = "Recupera informações sobre um pedido com base no ID fornecido")
-    @ApiResponse(responseCode = "200", description = "Pedido encontrado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class)))
-    @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+    @ApiResponse(responseCode = "200", description = "Pedido encontrado com sucesso", content = @Content(mediaType = "application/json", schema =
+    @Schema(implementation = PedidoResponseDto.class)))
+    @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(mediaType = "application/json", schema =
+    @Schema(implementation = ErrorMessage.class)))
     public ResponseEntity<PedidoResponseDto> buscarPorId(@PathVariable Long id) {
         Pedido pedido = pedidoService.buscarPorId(id);
         return ResponseEntity.ok(PedidoMapper.toDto(pedido));
