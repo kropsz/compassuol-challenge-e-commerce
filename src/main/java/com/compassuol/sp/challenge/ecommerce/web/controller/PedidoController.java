@@ -70,8 +70,10 @@ public class PedidoController {
 
     @PostMapping("/{id}/cancel")
     @Operation(summary = "Cancelar um pedido", description = "Cancela um pedido existente com base no ID fornecido")
-    @ApiResponse(responseCode = "200", description = "Pedido cancelado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class)))
-    @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+    @ApiResponse(responseCode = "200", description = "Pedido cancelado com sucesso", content = @Content(mediaType = "application/json", schema =
+    @Schema(implementation = PedidoResponseDto.class)))
+    @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(mediaType = "application/json", schema =
+    @Schema(implementation = ErrorMessage.class)))
     public ResponseEntity<PedidoResponseDto> cancelarPedido(@PathVariable Long id, @RequestBody PedidoCancelDto cancelReason) {
         Pedido pedidoCancelado = pedidoService.cancelarPedido(id, cancelReason.getCancelReason());
         return ResponseEntity.ok(PedidoMapper.toDto(pedidoCancelado));
