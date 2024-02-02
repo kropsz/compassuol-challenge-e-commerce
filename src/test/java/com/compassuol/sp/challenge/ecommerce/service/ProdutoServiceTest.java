@@ -23,9 +23,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.compassuol.sp.challenge.ecommerce.common.ProdutoConstants;
-import com.compassuol.sp.challenge.ecommerce.entities.Produto;
-import com.compassuol.sp.challenge.ecommerce.repository.ProdutoRepository;
-import com.compassuol.sp.challenge.ecommerce.services.ProdutoService;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.model.Produto;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.repo.ProdutoRepository;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.service.ProdutoService;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.ProdutoMapper;
 import com.compassuol.sp.challenge.ecommerce.exception.*;
 

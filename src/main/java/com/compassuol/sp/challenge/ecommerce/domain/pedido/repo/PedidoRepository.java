@@ -1,6 +1,6 @@
-package com.compassuol.sp.challenge.ecommerce.repository;
+package com.compassuol.sp.challenge.ecommerce.domain.pedido.repo;
 
-import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

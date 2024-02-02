@@ -11,8 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import com.compassuol.sp.challenge.ecommerce.common.ProdutoConstants;
-import com.compassuol.sp.challenge.ecommerce.entities.Produto;
-import com.compassuol.sp.challenge.ecommerce.services.ProdutoService;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.model.Produto;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.service.ProdutoService;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ProdutoCreateDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ProdutoResponseDto;
 import com.compassuol.sp.challenge.ecommerce.web.exception.ErrorMessage;

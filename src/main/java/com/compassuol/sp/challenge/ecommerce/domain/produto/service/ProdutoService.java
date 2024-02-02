@@ -1,9 +1,9 @@
-package com.compassuol.sp.challenge.ecommerce.services;
+package com.compassuol.sp.challenge.ecommerce.domain.produto.service;
 
-import com.compassuol.sp.challenge.ecommerce.entities.Produto;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.model.Produto;
 import com.compassuol.sp.challenge.ecommerce.exception.ProductNameUniqueViolation;
 import com.compassuol.sp.challenge.ecommerce.exception.ProdutoNotFoundException;
-import com.compassuol.sp.challenge.ecommerce.repository.ProdutoRepository;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.repo.ProdutoRepository;
 
 import lombok.RequiredArgsConstructor;
 

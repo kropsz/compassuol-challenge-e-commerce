@@ -1,7 +1,7 @@
 package com.compassuol.sp.challenge.ecommerce.web.dto.mapper;
 
-import com.compassuol.sp.challenge.ecommerce.entities.Address;
-import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Address;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Pedido;
 import com.compassuol.sp.challenge.ecommerce.web.dto.ViaCepDto;
 
 public class AddressMapper {

@@ -1,17 +1,18 @@
-package com.compassuol.sp.challenge.ecommerce.services;
+package com.compassuol.sp.challenge.ecommerce.domain.pedido.service;
 
-import com.compassuol.sp.challenge.ecommerce.entities.Address;
-import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
-import com.compassuol.sp.challenge.ecommerce.entities.PedidoProduto;
-import com.compassuol.sp.challenge.ecommerce.entities.Produto;
-import com.compassuol.sp.challenge.ecommerce.entities.Pedido.Status;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.service.ProdutoService;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Address;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Pedido;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.PedidoProduto;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.model.Produto;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Pedido.Status;
 import com.compassuol.sp.challenge.ecommerce.exception.ConectionException;
 import com.compassuol.sp.challenge.ecommerce.exception.MetodoDePagamentoInvalidoException;
 import com.compassuol.sp.challenge.ecommerce.feign.ViaCepFeign;
 import com.compassuol.sp.challenge.ecommerce.exception.CancelamentoInvalidoException;
 import com.compassuol.sp.challenge.ecommerce.exception.PedidoNaoEncontradoException;
 import com.compassuol.sp.challenge.ecommerce.exception.PedidoUpdateErrorException;
-import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.repo.PedidoRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -120,8 +121,8 @@ public class PedidoService {
 
         if (daysSinceCreation > 90) {
             throw new CancelamentoInvalidoException("O pedido não pode ser cancelado, data de criação superior à 90 dias");
-        } else if ((pedidoParaCancelar.getStatus().equals(Pedido.Status.SENT))) {
-            throw new CancelamentoInvalidoException("O pedido não pode ser cancelado, porque já foi enviado");
+        } else if ((pedidoParaCancelar.getStatus().equals(Pedido.Status.SENT)) || pedidoParaCancelar.getStatus().equals(Pedido.Status.CANCELED)) {
+            throw new CancelamentoInvalidoException("O pedido não pode ser cancelado, porque já foi enviado ou cancelado");
         } else {
             pedidoParaCancelar.setStatus(Pedido.Status.CANCELED);
             pedidoParaCancelar.setCancelReason(cancelReason);

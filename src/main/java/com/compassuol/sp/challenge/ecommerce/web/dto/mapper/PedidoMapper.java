@@ -1,6 +1,6 @@
 package com.compassuol.sp.challenge.ecommerce.web.dto.mapper;
 
-import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Pedido;
 import com.compassuol.sp.challenge.ecommerce.web.dto.PedidoCancelDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.PedidoCreateDto;
 import com.compassuol.sp.challenge.ecommerce.web.dto.PedidoResponseDto;

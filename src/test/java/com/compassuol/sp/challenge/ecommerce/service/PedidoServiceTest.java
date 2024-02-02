@@ -24,11 +24,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 
 import com.compassuol.sp.challenge.ecommerce.common.PedidoConstants;
-import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
-import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
-import com.compassuol.sp.challenge.ecommerce.repository.ProdutoRepository;
-import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
-import com.compassuol.sp.challenge.ecommerce.services.ProdutoService;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.model.Pedido;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.repo.PedidoRepository;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.repo.ProdutoRepository;
+import com.compassuol.sp.challenge.ecommerce.domain.pedido.service.PedidoService;
+import com.compassuol.sp.challenge.ecommerce.domain.produto.service.ProdutoService;
 import com.compassuol.sp.challenge.ecommerce.exception.*;
 
 
