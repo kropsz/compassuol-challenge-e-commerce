@@ -2,6 +2,7 @@ package com.compassuol.sp.challenge.ecommerce.integration;
 
 
 
+import com.compassuol.sp.challenge.ecommerce.web.dto.PedidoCancelDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -130,9 +131,8 @@ public class PedidoIT {
     @Test
     public void testeCancelarPedido() {
 
-        //int id = 2;
 
-        PedidoCreateDto pedido = PedidoConstants.PEDIDO_CREATE;
+        PedidoCancelDto pedido = PedidoConstants.PEDIDO_CANCELADO;
         PedidoResponseDto response = webTestClient
                 .post()
                 .uri("/orders")
@@ -146,7 +146,7 @@ public class PedidoIT {
         org.assertj.core.api.Assertions.assertThat(response).isNotNull();
         org.assertj.core.api.Assertions.assertThat(response.getIdPedido()).isNotNull();
 
-        webTestClient.put()
+        webTestClient.post()
                 .uri("/orders/{id}/cancel", response.getIdPedido())
                 .exchange()
                 .expectStatus().isOk();
