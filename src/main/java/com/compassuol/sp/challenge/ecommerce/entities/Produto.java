@@ -20,7 +20,7 @@ public class Produto implements Serializable {
     private Long id;
     @Column(name = "name", nullable = false, unique = true, length = 100)
     private String name;
-    @Column(name = "value", nullable = false)
+    @Column(name = "\"value\"", nullable = false)
     private BigDecimal value;
     @Column(name = "description", nullable = false, length = 400)
     private String description;

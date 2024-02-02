@@ -11,11 +11,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class AddressRequestDto {
-    @NotEmpty
+    @NotEmpty(message = "O Complemento não pode ser nulo")
     private String complemento;
     @NotNull
     private Integer number;
-    @NotEmpty
+    @NotEmpty(message = "O cep não pode ser vazio")
     @Size(min = 8, max = 9)
     private String postalCode;
 }

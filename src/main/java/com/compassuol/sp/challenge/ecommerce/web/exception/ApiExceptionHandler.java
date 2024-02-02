@@ -22,7 +22,7 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage(ex.getMessage(), request, result, HttpStatus.UNPROCESSABLE_ENTITY));
+                .body(new ErrorMessage("Campos(s) Inválidos", request, result, HttpStatus.UNPROCESSABLE_ENTITY));
     }
 
     @ExceptionHandler(ProductNameUniqueViolation.class)
