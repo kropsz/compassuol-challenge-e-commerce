@@ -3,7 +3,9 @@ package com.compassuol.sp.challenge.ecommerce.web.dto;
 import com.compassuol.sp.challenge.ecommerce.entities.Address;
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
 import com.compassuol.sp.challenge.ecommerce.entities.PedidoProduto;
+import com.compassuol.sp.challenge.ecommerce.util.MoneyDeserializer;
 import com.compassuol.sp.challenge.ecommerce.util.MoneySerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.AllArgsConstructor;
@@ -22,9 +24,11 @@ public class PedidoResponseDto {
     private Address address;
     private Pedido.PaymentMethod paymentMethod;
     @JsonSerialize(using = MoneySerializer.class)
+    @JsonDeserialize(using = MoneyDeserializer.class)
     private BigDecimal subtotalValue;
     private BigDecimal discount;
     @JsonSerialize(using = MoneySerializer.class)
+    @JsonDeserialize(using = MoneyDeserializer.class)
     private BigDecimal totalValue;
     private LocalDateTime createdDate;
     private Pedido.Status status;
