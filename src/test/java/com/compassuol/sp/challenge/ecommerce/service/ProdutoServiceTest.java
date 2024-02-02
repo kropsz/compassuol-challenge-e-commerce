@@ -56,20 +56,20 @@ public class ProdutoServiceTest {
     }
 
    @Test
-    public void createProduto_successfull_WithValidData_ReturnsPlanet() {
+    public void createProduto_successfull_WithValidData_ReturnsProduto() {
 
         Produto expectedProduto = ProdutoConstants.PRODUTO;
         when(produtoRepository.findByName(any(String.class))).thenReturn(Optional.empty());
         when(produtoRepository.save(any(Produto.class))).thenReturn(expectedProduto);
 
 
-        Produto actualProduto = productService.salvar(ProdutoMapper.toProduto(PRODUTO_INVALID_DTO));
+        Produto actualProduto = productService.salvar(ProdutoMapper.toProduto(PRODUTO_VALID_DTO));
 
         assertEquals(expectedProduto, actualProduto);
     }
 
     @Test
-    public void createProduto_fail_WithInvalidData_ReturnsPlanet() {
+    public void createProduto_fail_WithInvalidData_ReturnsProduto() {
         
         when(produtoRepository.findByName(any(String.class))).thenReturn(Optional.of(ProdutoConstants.PRODUTO));
         assertThrows(ProductNameUniqueViolation.class, () -> {
