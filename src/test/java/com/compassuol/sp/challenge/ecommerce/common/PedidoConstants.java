@@ -20,7 +20,6 @@ public class PedidoConstants {
         return produtos;
     }
 
-    //TODO: REVISAR AS CONSTANTES
     public static final Pedido PEDIDO = new Pedido(1L,
                                                     iniciaLista(produtos, produto),
                                                     new Address(1L,"street", 4, "complement", "city", "state", "39802077"),
@@ -103,4 +102,16 @@ public class PedidoConstants {
             4,
             ""),
     Pedido.PaymentMethod.PIX);
+
+    public static final PedidoCreateDto PEDIDO_VALID_DTO = new PedidoCreateDto(produtos,
+            new AddressRequestDto("teste", 73573, "36307240"),
+            Pedido.PaymentMethod.PIX);
+
+    public static final PedidoCreateDto PEDIDO_INVALID_PAYMENT_DTO = new PedidoCreateDto(produtos,
+            new AddressRequestDto("", 73573, "123456789"),
+            Pedido.PaymentMethod.CREDIT_CARD);
+
+    public static final PedidoCreateDto PEDIDO_INVALID_CEP_DTO = new PedidoCreateDto(produtos,
+            new AddressRequestDto("", 73573, "1234567"),
+            Pedido.PaymentMethod.PIX);
 }
