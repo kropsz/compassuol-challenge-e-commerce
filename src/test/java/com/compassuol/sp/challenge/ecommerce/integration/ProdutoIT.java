@@ -41,7 +41,7 @@ public class ProdutoIT {
                 .returnResult().getResponseBody();
             org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
             org.assertj.core.api.Assertions.assertThat(responseBody.getId()).isNotNull();
-            org.assertj.core.api.Assertions.assertThat(responseBody.getId()).isEqualTo(2L);  
+            org.assertj.core.api.Assertions.assertThat(responseBody.getId()).isEqualTo(2L);
     }
 
     @Test

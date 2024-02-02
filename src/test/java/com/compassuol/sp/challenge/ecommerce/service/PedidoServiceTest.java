@@ -1,53 +1,35 @@
 package com.compassuol.sp.challenge.ecommerce.service;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
 
-import static com.compassuol.sp.challenge.ecommerce.common.ProdutoConstants.*;
 import static com.compassuol.sp.challenge.ecommerce.common.PedidoConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.anyString;
 
 import com.compassuol.sp.challenge.ecommerce.common.PedidoConstants;
-import com.compassuol.sp.challenge.ecommerce.entities.Address;
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
-import com.compassuol.sp.challenge.ecommerce.entities.PedidoProduto;
-import com.compassuol.sp.challenge.ecommerce.entities.Produto;
 import com.compassuol.sp.challenge.ecommerce.repository.PedidoRepository;
 import com.compassuol.sp.challenge.ecommerce.repository.ProdutoRepository;
 import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
 import com.compassuol.sp.challenge.ecommerce.services.ProdutoService;
-import com.compassuol.sp.challenge.ecommerce.web.dto.ViaCepDto;
-import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.PedidoMapper;
 import com.compassuol.sp.challenge.ecommerce.exception.*;
-import com.compassuol.sp.challenge.ecommerce.feign.ViaCepFeign;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -65,7 +47,6 @@ public class PedidoServiceTest {
     @Mock
     private ProdutoRepository produtoRepository;
 
-    //TODO: AMOSTRAS DE TESTES CRIADOS, REVISAR DEPOIS
 
 
     Pedido pedido;
@@ -77,7 +58,7 @@ public class PedidoServiceTest {
 
     @BeforeEach
     void setUp() {
-        Produto falseProduct = new Produto(1L, "Produto 1", new BigDecimal(10.0), "Descrição do produto 1");;
+        //Produto falseProduct = new Produto(1L, "Produto 1", new BigDecimal(10.0), "Descrição do produto 1");;
         //when(produtoRepository.save(falseProduct)).thenReturn(falseProduct);
         //when(produtoRepository.findById(1L)).thenReturn(Optional.of(falseProduct));
         pedido = PedidoConstants.criarPedido(1L, Pedido.Status.CONFIRMED, 1);
