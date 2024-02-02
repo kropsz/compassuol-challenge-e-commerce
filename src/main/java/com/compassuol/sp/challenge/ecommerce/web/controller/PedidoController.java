@@ -1,7 +1,7 @@
 package com.compassuol.sp.challenge.ecommerce.web.controller;
 
 import com.compassuol.sp.challenge.ecommerce.entities.Pedido;
- import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
+import com.compassuol.sp.challenge.ecommerce.services.PedidoService;
 import com.compassuol.sp.challenge.ecommerce.web.dto.*;
 import com.compassuol.sp.challenge.ecommerce.web.dto.mapper.PedidoMapper;
 import com.compassuol.sp.challenge.ecommerce.web.exception.ErrorMessage;
@@ -22,61 +22,52 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-
-@Tag(name = "Produtos", description = "Contém todas as opereções relativas ao recurso de um produto")
+@Tag(name = "Pedidos", description = "Contém todas as operações relacionadas ao recurso de um pedido")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/orders")
 public class PedidoController {
     private final PedidoService pedidoService;
 
-
-    @PostMapping()
+    @PostMapping
+    @Operation(summary = "Criar um novo pedido", description = "Cria um novo pedido no sistema")
+    @ApiResponse(responseCode = "201", description = "Pedido criado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class)))
     public ResponseEntity<PedidoResponseDto> create(@RequestBody @Valid PedidoCreateDto createDto) {
         Pedido pedido = pedidoService.salvar(PedidoMapper.toPedido(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(PedidoMapper.toDto(pedido));
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar pedido por ID", description = "Recupera informações sobre um pedido com base no ID fornecido")
+    @ApiResponse(responseCode = "200", description = "Pedido encontrado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class)))
+    @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
     public ResponseEntity<PedidoResponseDto> buscarPorId(@PathVariable Long id) {
         Pedido pedido = pedidoService.buscarPorId(id);
         return ResponseEntity.ok(PedidoMapper.toDto(pedido));
     }
 
-    @Operation(summary = "Recuperar todos os Pedidos ordenados por data de criação", description = "Recurso para recuperar todos os pedidos no banco de e ordená-los por data de criação",
-            responses = {
-                    @ApiResponse(responseCode = "200",
-                            description = "Recursos recuperados com sucesso",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class))),
-                    @ApiResponse(responseCode = "400",
-                            description = "Recurso não existe",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
-            }
-    )
     @GetMapping
+    @Operation(summary = "Recuperar todos os pedidos", description = "Recupera todos os pedidos no sistema")
+    @ApiResponse(responseCode = "200", description = "Pedidos recuperados com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class)))
     public ResponseEntity<List<PedidoResponseDto>> getAll(@RequestParam(required = false) Pedido.Status status) {
         List<Pedido> pedidos = pedidoService.getAllPedidos(status);
         return ResponseEntity.ok(PedidoMapper.toListDto(pedidos));
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Atualizar um pedido", description = "Atualiza as informações de um pedido existente com base no ID fornecido")
+    @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class)))
+    @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
     public ResponseEntity<PedidoResponseDto> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoUpdateDto pedidoDto) {
         Pedido pedidoUpdateFromDto = PedidoMapper.toPedido(pedidoDto);
         Pedido pedidoAtualizado = pedidoService.updatePedido(id, pedidoUpdateFromDto);
         return ResponseEntity.status(HttpStatus.OK).body(PedidoMapper.toDto(pedidoAtualizado));
     }
 
-    @Operation(summary = "Cancelar um pedido", description = "Recurso para cancelar um pedido existente",
-            responses = {
-                    @ApiResponse(responseCode = "200",
-                            description = "Pedido cancelado com sucesso",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class))),
-                    @ApiResponse(responseCode = "404",
-                            description = "Pedido não encontrado",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
-            }
-    )
     @PostMapping("/{id}/cancel")
+    @Operation(summary = "Cancelar um pedido", description = "Cancela um pedido existente com base no ID fornecido")
+    @ApiResponse(responseCode = "200", description = "Pedido cancelado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResponseDto.class)))
+    @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
     public ResponseEntity<PedidoResponseDto> cancelarPedido(@PathVariable Long id, @RequestBody PedidoCancelDto cancelReason) {
         Pedido pedidoCancelado = pedidoService.cancelarPedido(id, cancelReason.getCancelReason());
         return ResponseEntity.ok(PedidoMapper.toDto(pedidoCancelado));
