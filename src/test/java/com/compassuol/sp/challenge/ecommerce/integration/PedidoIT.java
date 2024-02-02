@@ -126,5 +126,38 @@ public class PedidoIT {
             org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
             org.assertj.core.api.Assertions.assertThat(responseBody.getCode()).isEqualTo(404);         
         
-    }    
+    }
+    @Test
+    public void testeCancelarPedido() {
+
+        //int id = 2;
+
+        PedidoCreateDto pedido = PedidoConstants.PEDIDO_CREATE;
+        PedidoResponseDto response = webTestClient
+                .post()
+                .uri("/orders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(pedido)
+                .exchange()
+                .expectStatus().isEqualTo(201)
+                .expectBody(PedidoResponseDto.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(response).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(response.getIdPedido()).isNotNull();
+
+        webTestClient.put()
+                .uri("/orders/{id}/cancel", response.getIdPedido())
+                .exchange()
+                .expectStatus().isOk();
+        PedidoResponseDto canceledOrder = webTestClient.get()
+                .uri("/orders/{id}", response.getIdPedido())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(PedidoResponseDto.class)
+                .returnResult().getResponseBody();
+        org.assertj.core.api.Assertions.assertThat(canceledOrder).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(canceledOrder.getStatus()).isEqualTo("CANCELADO");
+    }
+
 }
