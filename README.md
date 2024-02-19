@@ -283,6 +283,12 @@ O projeto foi desenvolvido com a linguagem Java, fazendo uso do Java Development
 *  `spring.datasource.url` : Informe o endereço do seu banco de dados MySql.
 *  `spring.datasource.username`: Informe o nome de usuário do banco de dados MySql.
 *  `spring.datasource.password`: Informe a senha do seu usuário do banco de dados MySql
+  
+### Execução
+Com o projeto em execução acesse o endereço `http://localhost:8080/e-commerce.html` para acessar a documentação da API pelo Swagger ou utilize uma ferramenta de testes de API's como: 
+* Postman
+* Insomnia
+* Bruno
 
 # Conclusão
-O projeto E-Commerce da Compass-UOL desenvolvido pela equipe NullPointeException proporciona uma solução robusta para gerenciamento de pedidos e produtos em um ambiente de e-commerce. Utilizando tecnologias modernas como Spring Boot 3 e Java 17, o projeto incorpora boas práticas de desenvolvimento, incluindo testes unitários, documentação Swagger, e tratamento de exceções.
+O projeto E-Commerce da Compass-UOL desenvolvido pela equipe NullPointeException proporciona uma solução robusta para gerenciamento de pedidos e produtos em um ambiente de e-commerce. Utilizando tecnologias modernas como Spring Boot 3 e Java 17, o projeto incorpora boas práticas de desenvolvimento, incluindo testes unitários e de integração, documentação Swagger, e tratamento de exceções.
